@@ -38,6 +38,7 @@ class FormPhoneNumberField extends StatelessWidget {
             onChanged: field.didChange,
             allowCountryCodeChange: allowCountryCodeChange,
             placeholder: placeholder,
+            errorText: field.errorText,
           ),
         ),
       ],
@@ -52,6 +53,7 @@ class PhoneNumberField extends StatefulWidget {
     this.onSubmitted,
     this.allowCountryCodeChange = true,
     this.placeholder,
+    this.errorText,
     super.key,
   });
 
@@ -60,45 +62,46 @@ class PhoneNumberField extends StatefulWidget {
   final void Function()? onSubmitted;
   final bool allowCountryCodeChange;
   final String? placeholder;
+  final String? errorText;
 
   @override
   State<PhoneNumberField> createState() => _PhoneNumberFieldState();
 }
 
 class _PhoneNumberFieldState extends State<PhoneNumberField> {
+  late TextEditingController _controller;
   late CountryWithPhoneCode countryCode;
   final _focusNode = FocusNode();
+
+  String? get phoneNumber => _controller.text.isNotEmpty
+      ? '+${countryCode.phoneCode}${_controller.text.replaceAll(' ', '')}'
+      : null;
 
   @override
   void initState() {
     super.initState();
-    countryCode = CountryWithPhoneCode.getCountryDataByPhone(widget.initialValue ?? '+48')!;
+    countryCode = CountryWithPhoneCode.getCountryDataByPhone(
+      widget.initialValue ?? '+48',
+    )!;
+
+    _controller = TextEditingController(
+      text: widget.initialValue != null
+          ? formatNumberSync(
+              widget.initialValue!,
+              country: countryCode,
+              inputContainsCountryCode: false,
+            )
+          : '',
+    );
+
     _focusNode.addListener(() => setState(() {}));
   }
-
-  TextEditingController? get controller {
-    if (widget.initialValue == null) return null;
-    final formatted = formatNumberSync(
-      widget.initialValue!,
-      country: countryCode,
-      inputContainsCountryCode: false,
-    );
-    return TextEditingController()
-      ..value = TextEditingValue(
-        text: formatted,
-        selection: TextSelection.collapsed(offset: formatted.length),
-      );
-  }
-
-  String? get phoneNumber => controller?.value != null
-      ? '+${countryCode.phoneCode} ${controller!.value.text}'
-      : null;
 
   @override
   Widget build(BuildContext context) {
     return InputDecorator(
       isFocused: _focusNode.hasFocus,
-      decoration: const InputDecoration(),
+      decoration: InputDecoration(errorText: widget.errorText),
       child: IntrinsicHeight(
         child: Row(
           spacing: 8,
@@ -135,7 +138,7 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
             const VerticalDivider(thickness: 1, width: 1),
             Expanded(
               child: TextField(
-                controller: controller,
+                controller: _controller,
                 focusNode: _focusNode,
                 textAlignVertical: TextAlignVertical.center,
                 keyboardType: TextInputType.phone,
@@ -149,7 +152,7 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
                   focusedBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
                 ),
-                onChanged: (value) => widget.onChanged.call(phoneNumber),
+                onChanged: (_) => widget.onChanged.call(phoneNumber),
                 onSubmitted: (_) => widget.onSubmitted?.call(),
                 onTapOutside: (_) => _focusNode.unfocus(),
               ),
