@@ -1,23 +1,34 @@
 PODS:
   - Flutter (1.0.0)
+  - flutter_libphonenumber_ios (1.1.4):
+    - Flutter
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.8.0)
   - flutter_localization (0.0.1):
     - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - PhoneNumberKit/PhoneNumberKitCore (3.8.0)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - flutter_libphonenumber_ios (from `.symlinks/plugins/flutter_libphonenumber_ios/ios`)
   - flutter_localization (from `.symlinks/plugins/flutter_localization/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
+SPEC REPOS:
+  trunk:
+    - PhoneNumberKit
+
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_libphonenumber_ios:
+    :path: ".symlinks/plugins/flutter_libphonenumber_ios/ios"
   flutter_localization:
     :path: ".symlinks/plugins/flutter_localization/ios"
   path_provider_foundation:
@@ -27,8 +38,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_libphonenumber_ios: 6bd2fac9dfb8f37c5732451fb7c9a992f1088d86
   flutter_localization: 72299fb6cb4e51cae587bd953ed0b958040b71e6
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  PhoneNumberKit: ec00ab8cef5342c1dc49fadb99d23fa7e66cf0ef
   shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796

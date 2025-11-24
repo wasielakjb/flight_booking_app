@@ -8,6 +8,14 @@ class AppTheme {
     typography: Typography.material2021(),
     colorScheme: lightColorScheme,
     textTheme: lightTextTheme,
+    navigationBarTheme: NavigationBarThemeData(
+      labelTextStyle: WidgetStateProperty.resolveWith((_) {
+        return lightTextTheme.labelMedium
+            ?.copyWith(fontWeight: FontWeight.w600);
+      }),
+      backgroundColor: lightColorScheme.surface,
+      indicatorColor: Colors.transparent,
+    ),
     inputDecorationTheme: InputDecorationTheme(
       floatingLabelBehavior: FloatingLabelBehavior.always,
       border: const OutlineInputBorder(

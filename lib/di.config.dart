@@ -12,8 +12,6 @@
 import 'package:flight_booking_app/app/cubit/app_locale_cubit.dart' as _i533;
 import 'package:flight_booking_app/app/cubit/app_theme_cubit.dart' as _i850;
 import 'package:flight_booking_app/app/router/app_router.dart' as _i716;
-import 'package:flight_booking_app/screens/home/routing/home_routes.dart'
-    as _i891;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -31,7 +29,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i850.AppThemeCubit>(() => _i850.AppThemeCubit());
     gh.singleton<_i533.AppLocaleCubit>(() => _i533.AppLocaleCubit());
     gh.singleton<_i716.AppRouter>(() => _i716.AppRouter());
-    gh.singleton<_i891.HomeRoutes>(() => _i891.HomeRoutes());
     return this;
   }
 }

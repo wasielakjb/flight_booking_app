@@ -23,6 +23,10 @@ dependencies:
   flutter_form_builder: ^9.7.0
   custom_sliding_segmented_control: ^1.8.5
   calendar_date_picker2: ^2.0.1
+  icons_plus: ^5.0.0
+  form_builder_validators: ^11.1.2
+  flutter_libphonenumber: ^2.5.1
+  scrollable_positioned_list: ^0.3.8
 
 dev_dependencies:
   flutter_test:
