@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flight_booking_app/app/router/app_router.gr.dart';
-import 'package:flight_booking_app/di.dart';
 import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
-import 'package:flight_booking_app/features/auth/domain/repository/auth_repository.dart';
 import 'package:flight_booking_app/screens/settings/widgets/settings_navigation_wgt.dart';
 import 'package:flight_booking_app/screens/settings/widgets/settings_profile_header_wgt.dart';
 import 'package:flight_booking_app/templates/app_navigation_bar.dart';
@@ -11,18 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 @RoutePage()
-class SettingsPage extends StatelessWidget implements AutoRouteWrapper {
+class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AuthCubit(
-        authRepository: inject<AuthRepository>(),
-      ),
-      child: this,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +58,7 @@ class SettingsPage extends StatelessWidget implements AutoRouteWrapper {
                 title: 'Logout',
                 icon: Iconsax.logout_1_outline,
                 showAction: false,
-                onTap: context.read<AuthCubit>().signOut,
+                onTap: context.read<AuthCubit>().logout,
               ),
             ],
           ),

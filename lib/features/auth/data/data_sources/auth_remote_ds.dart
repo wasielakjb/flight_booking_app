@@ -18,14 +18,14 @@ class AuthRemoteDataSource {
     );
   }
 
-  Future<UserCredential> createUser(String email, String password) async {
+  Future<UserCredential> register(String email, String password) async {
     return firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
   }
 
-  Future<void> signOut() async {
+  Future<void> logout() async {
     await firebaseAuth.signOut();
   }
 }

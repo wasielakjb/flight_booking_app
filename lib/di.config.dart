@@ -56,10 +56,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i702.AuthRepository(remoteDS: gh<_i204.AuthRemoteDataSource>()));
     gh.singleton<_i74.UserRepository>(
         () => _i74.UserRepository(remoteDS: gh<_i364.UserRemoteDataSource>()));
-    gh.singleton<_i999.AuthCubit>(
-        () => _i999.AuthCubit(authRepository: gh<_i702.AuthRepository>()));
     gh.singleton<_i859.AuthGuard>(
         () => _i859.AuthGuard(gh<_i702.AuthRepository>()));
+    gh.singleton<_i999.AuthCubit>(() => _i999.AuthCubit(
+          authRepository: gh<_i702.AuthRepository>(),
+          userRepository: gh<_i74.UserRepository>(),
+        ));
     gh.singleton<_i716.AppRouter>(
         () => _i716.AppRouter(authGuard: gh<_i859.AuthGuard>()));
     return this;

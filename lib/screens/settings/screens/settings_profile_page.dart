@@ -121,11 +121,7 @@ class _SettingsProfilePageState extends State<SettingsProfilePage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: FilledButton(
-            onPressed: () {
-              if (!(_formKey.currentState?.saveAndValidate() ?? false)) return;
-              final data = _formKey.currentState!.value;
-              cubit.create(data);
-            },
+            onPressed: () {},
             child: const Text('Save'),
           ),
         ),

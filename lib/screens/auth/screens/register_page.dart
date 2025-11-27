@@ -97,12 +97,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   validator: FormBuilderValidators.required(),
                 ),
                 const SizedBox(height: 24),
-                FilledButton(
-                  onPressed: submit,
-                  child:  const AnyButtonContent.filled(
-                    fullWidth: true,
-                    // pending: cubit.state.isPending,
-                    text: 'Create account ',
+                BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, state) => FilledButton(
+                    onPressed: state is AuthLoading ? null : submit,
+                    child: AnyButtonContent.filled(
+                      fullWidth: true,
+                      pending: state is AuthLoading,
+                      text: 'Create account',
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),

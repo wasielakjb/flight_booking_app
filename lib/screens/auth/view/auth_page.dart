@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flight_booking_app/di.dart';
 import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
 import 'package:flight_booking_app/features/auth/domain/repository/auth_repository.dart';
+import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,6 +15,7 @@ class AuthPage extends StatelessWidget {
     return BlocProvider(
       create: (_) => AuthCubit(
         authRepository: inject<AuthRepository>(),
+        userRepository: inject<UserRepository>(),
       ),
       child: const AutoRouter(),
     );

@@ -7,6 +7,7 @@ part 'user_request.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake, createFactory: false)
 class UserRequest implements FormRequest {
   UserRequest({
+    required this.id,
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -14,6 +15,7 @@ class UserRequest implements FormRequest {
     required this.dateOfBirth,
   });
 
+  final String id;
   final String firstName;
   final String lastName;
   final String email;

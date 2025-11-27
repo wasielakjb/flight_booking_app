@@ -4,6 +4,8 @@ import 'package:flight_booking_app/features/auth/domain/models/auth_user.dart';
 import 'package:flight_booking_app/features/auth/domain/models/login_credentials.dart';
 import 'package:flight_booking_app/features/auth/domain/models/register_credentials.dart';
 import 'package:flight_booking_app/features/auth/domain/repository/auth_repository.dart';
+import 'package:flight_booking_app/features/users/domain/models/user_request.dart';
+import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -12,7 +14,10 @@ part 'auth_state.dart';
 
 @singleton
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit({required this.authRepository}) : super(const AuthLoading()){
+  AuthCubit({
+    required this.authRepository,
+    required this.userRepository,
+  }) : super(const AuthLoading()) {
     if (authRepository.isAuthenticated) {
       emit(Authenticated(authRepository.user!));
     }
@@ -21,6 +26,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   @protected
   final AuthRepository authRepository;
+
+  @protected
+  final UserRepository userRepository;
 
   Future<void> login(LoginCredentials credentials) async {
     try {
@@ -32,15 +40,37 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> signOut() async {
+  Future<void> register(RegisterCredentials data) async {
     try {
       emit(const AuthLoading());
-      await authRepository.signOut();
-      emit(const Unauthenticated());
+      final user = await authRepository.register(data);
+      await userRepository.create(data.toUserRequest(user.id));
+      emit(Authenticated(user));
     } catch (e) {
       emit(AuthError(e.toString()));
     }
   }
 
-  Future<void> register(RegisterCredentials data) async {}
+  Future<void> logout() async {
+    try {
+      emit(const AuthLoading());
+      await authRepository.logout();
+      emit(const Unauthenticated());
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+}
+
+extension on RegisterCredentials {
+  UserRequest toUserRequest(String id) {
+    return UserRequest(
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: null,
+      dateOfBirth: null,
+    );
+  }
 }

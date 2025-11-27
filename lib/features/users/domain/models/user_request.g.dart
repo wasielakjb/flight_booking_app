@@ -8,6 +8,7 @@ part of 'user_request.dart';
 
 Map<String, dynamic> _$UserRequestToJson(UserRequest instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
       'email': instance.email,

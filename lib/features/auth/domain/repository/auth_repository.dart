@@ -2,6 +2,7 @@ import 'package:flight_booking_app/features/auth/data/data_sources/auth_remote_d
 import 'package:flight_booking_app/features/auth/data/mappers/auth_user_mapper.dart';
 import 'package:flight_booking_app/features/auth/domain/models/auth_user.dart';
 import 'package:flight_booking_app/features/auth/domain/models/login_credentials.dart';
+import 'package:flight_booking_app/features/auth/domain/models/register_credentials.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -26,7 +27,13 @@ class AuthRepository {
         .then((res) => res.user!.asAuthUser());
   }
 
-  Future<void> signOut() async {
-    await remoteDS.signOut();
+  Future<AuthUser> register(RegisterCredentials payload) async {
+    return remoteDS
+        .register(payload.email, payload.password)
+        .then((res) => res.user!.asAuthUser());
+  }
+
+  Future<void> logout() async {
+    await remoteDS.logout();
   }
 }

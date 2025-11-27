@@ -18,8 +18,7 @@ class UserRemoteDataSource extends RemoteDataSource<NetworkUser> {
 
   @override
   Future<void> create(Json payload) async {
-    final doc = await collection.add(payload);
-    await doc.update({'id': doc.id});
+    await collection.doc(payload['id'] as String).set(payload);
   }
 
   @override
