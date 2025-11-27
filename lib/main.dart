@@ -6,6 +6,7 @@ import 'package:flutter_libphonenumber/flutter_libphonenumber.dart'
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await configureDependencies();
   await lib_phone_number.init();
 

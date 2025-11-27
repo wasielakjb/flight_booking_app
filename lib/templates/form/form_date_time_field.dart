@@ -1,3 +1,4 @@
+import 'package:flight_booking_app/extensions/kotlin_extensions.dart';
 import 'package:flight_booking_app/extensions/text_theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,6 +53,7 @@ class FormDateTimeField extends StatelessWidget {
           ),
           inputType: InputType.date,
           format: DateFormat('dd MMM yyyy'),
+          valueTransformer: (value) => value.let(DateFormat('dd MMM yyyy').format),
           obscureText: obscureText,
           keyboardType: keyboardType,
           textCapitalization: textCapitalization,

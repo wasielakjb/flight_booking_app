@@ -3,6 +3,8 @@ import 'package:flight_booking_app/app/cubit/app_locale_cubit.dart';
 import 'package:flight_booking_app/app/cubit/app_theme_cubit.dart';
 import 'package:flight_booking_app/app/router/app_router.dart';
 import 'package:flight_booking_app/di.dart';
+import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
+import 'package:flight_booking_app/features/auth/domain/repository/auth_repository.dart';
 import 'package:flight_booking_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +14,7 @@ class App extends StatelessWidget {
   App({super.key});
 
   final router = inject<AppRouter>();
+  final authRepository = inject<AuthRepository>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +22,7 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => inject<AppLocaleCubit>()),
         BlocProvider(create: (_) => inject<AppThemeCubit>()),
+        BlocProvider(create: (_) => inject<AuthCubit>()),
       ],
       child: BlocBuilder<AppThemeCubit, ThemeMode>(
         builder: (context, theme) => BlocBuilder<AppLocaleCubit, Locale>(
@@ -32,6 +36,9 @@ class App extends StatelessWidget {
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             routerConfig: router.config(
               navigatorObservers: () => [AutoRouteObserver()],
+              reevaluateListenable: ReevaluateListenable.stream(
+                authRepository.stream.map((user) => user != null),
+              ),
             ),
           ),
         ),
