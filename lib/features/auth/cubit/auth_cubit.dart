@@ -12,7 +12,12 @@ part 'auth_state.dart';
 
 @singleton
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit({required this.authRepository}) : super(const AuthLoading());
+  AuthCubit({required this.authRepository}) : super(const AuthLoading()){
+    if (authRepository.isAuthenticated) {
+      emit(Authenticated(authRepository.user!));
+    }
+    emit(const Unauthenticated());
+  }
 
   @protected
   final AuthRepository authRepository;

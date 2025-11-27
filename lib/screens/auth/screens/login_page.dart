@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> submit() async {
     if (!(formState?.saveAndValidate() ?? false)) return;
-    
+
     final data = LoginCredentials.fromJson(formState!.instantValue);
     await cubit.login(data);
   }
@@ -56,7 +56,6 @@ class _LoginPageState extends State<LoginPage> {
                 Text('F L I G H T   B O O K I N G', style: context.titleLarge),
                 const SizedBox(height: 48),
                 FormTextField(
-                  initialValue: 'test@example.com',
                   formName: 'email',
                   label: 'Email',
                   placeholder: 'Enter e-mail',
@@ -68,7 +67,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 18),
                 FormTextField(
-                  initialValue: 'Password',
                   formName: 'password',
                   label: 'Password',
                   placeholder: 'Enter password',
@@ -87,11 +85,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                FilledButton(
-                  onPressed: submit,
-                  child: const AnyButtonContent.filled(
-                    fullWidth: true,
-                    text: 'Login',
+                BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, state) => FilledButton(
+                    onPressed: state is AuthLoading ? null : submit,
+                    child: AnyButtonContent.filled(
+                      fullWidth: true,
+                      pending: state is AuthLoading,
+                      text: 'Login',
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
