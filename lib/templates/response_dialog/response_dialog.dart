@@ -9,11 +9,13 @@ class ResponseDialog extends StatelessWidget {
     required this.title,
     required this.iconData,
     required this.type,
+    this.subtitle,
     this.content,
     super.key,
   });
 
   final Widget title;
+  final Widget? subtitle;
   final IconData iconData;
   final ResponseDialogTheme type;
   final List<Widget>? content;
@@ -21,6 +23,7 @@ class ResponseDialog extends StatelessWidget {
   static Future<void> show({
     required BuildContext context,
     required Widget title,
+    required Widget? subtitle,
     required IconData iconData,
     required ResponseDialogTheme type,
     required List<Widget>? content,
@@ -29,6 +32,7 @@ class ResponseDialog extends StatelessWidget {
       context: context,
       builder: (context) => ResponseDialog(
         title: title,
+        subtitle: subtitle,
         iconData: iconData,
         type: type,
         content: content,
@@ -47,7 +51,7 @@ class ResponseDialog extends StatelessWidget {
           children: [
             ResponseDialogIcon(
               iconData: iconData,
-              type: ResponseDialogTheme.success,
+              type: type,
             ),
             const SizedBox(height: 16),
             DefaultTextStyle(
@@ -56,7 +60,20 @@ class ResponseDialog extends StatelessWidget {
               child: title,
             ),
             const SizedBox(height: 12),
-            Column(children: content ?? []),
+            Column(
+              children: [
+                if (subtitle != null)
+                  DefaultTextStyle(
+                    style: context.labelLarge,
+                    textAlign: TextAlign.center,
+                    child: subtitle!,
+                  ),
+                if (content != null) ...[
+                  const SizedBox(height: 32),
+                  ...content!,
+                ],
+              ],
+            ),
           ],
         ),
       ),

@@ -10,10 +10,11 @@ part 'response_dialog_state.dart';
 class ResponseDialogCubit extends Cubit<ResponseDialogState> {
   ResponseDialogCubit() : super(ResponseDialogState.initial());
 
-  void success(Widget title, {IconData? iconData, List<Widget>? content}) {
+  void success(Widget title, {Widget? subtitle, IconData? iconData, List<Widget>? content}) {
     emit(
       ResponseDialogState(
         title: title,
+        subtitle: subtitle,
         iconData: iconData ?? Icons.verified_rounded,
         type: ResponseDialogTheme.success,
         content: content,
@@ -21,10 +22,11 @@ class ResponseDialogCubit extends Cubit<ResponseDialogState> {
     );
   }
 
-  void info(Widget title, {IconData? iconData, List<Widget>? content}) {
+  void info(Widget title, {Widget? subtitle, IconData? iconData, List<Widget>? content}) {
     emit(
       ResponseDialogState(
         title: title,
+        subtitle: subtitle,
         iconData: iconData ?? Icons.info_rounded,
         type: ResponseDialogTheme.info,
         content: content,
@@ -32,7 +34,7 @@ class ResponseDialogCubit extends Cubit<ResponseDialogState> {
     );
   }
 
-  void warning(Widget title, {IconData? iconData, List<Widget>? content}) {
+  void warning(Widget title, {Widget? subtitle, IconData? iconData, List<Widget>? content}) {
     emit(
       ResponseDialogState(
         title: title,
@@ -43,10 +45,11 @@ class ResponseDialogCubit extends Cubit<ResponseDialogState> {
     );
   }
 
-  void error(Widget title, {IconData? iconData, List<Widget>? content}) {
+  void error(Widget title, {Widget? subtitle, IconData? iconData, List<Widget>? content}) {
     emit(
       ResponseDialogState(
         title: title,
+        subtitle: subtitle,
         iconData: iconData ?? Icons.error_rounded,
         type: ResponseDialogTheme.error,
         content: content,
@@ -54,10 +57,11 @@ class ResponseDialogCubit extends Cubit<ResponseDialogState> {
     );
   }
 
-  void neutral(Widget title, {IconData? iconData, List<Widget>? content}) {
+  void neutral(Widget title, {Widget? subtitle, IconData? iconData, List<Widget>? content}) {
     emit(
       ResponseDialogState(
         title: title,
+        subtitle: subtitle,
         iconData: iconData ?? Icons.notifications_rounded,
         type: ResponseDialogTheme.neutral,
         content: content,

@@ -27,8 +27,8 @@ class UserRepository extends Repository<UserResource> {
   }
 
   @override
-  Future<UserResource> create(UserRequest request) async {
-    return remoteDS.create(request.toJson()).then((res) => res.asEntity());
+  Future<UserResource> create(String id, UserRequest request) async {
+    return remoteDS.create(id, request.toJson()).then((res) => res.asEntity());
   }
 
   @override

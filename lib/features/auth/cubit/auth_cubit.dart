@@ -46,7 +46,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(const AuthLoading());
       final user = await authRepository.register(data);
-      await userRepository.create(data.toUserRequest(user.id));
+      await userRepository.create(user.id, data.toUserRequest());
       emit(Authenticated(user));
     } catch (e) {
       emit(AuthError(e.toString()));
@@ -65,7 +65,7 @@ class AuthCubit extends Cubit<AuthState> {
 }
 
 extension on RegisterCredentials {
-  UserRequest toUserRequest(String id) {
+  UserRequest toUserRequest() {
     return UserRequest(
       firstName: firstName,
       lastName: lastName,

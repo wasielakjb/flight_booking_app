@@ -15,7 +15,7 @@ class UserRequest implements FormRequest {
   });
 
   factory UserRequest.fromJson(Json json) => _$UserRequestFromJson(json);
-
+  
   final String firstName;
   final String lastName;
   final String email;

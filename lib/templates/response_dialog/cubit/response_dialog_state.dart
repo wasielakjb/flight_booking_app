@@ -5,6 +5,7 @@ class ResponseDialogState extends Equatable {
     required this.title,
     required this.iconData,
     required this.type,
+    this.subtitle,
     this.content,
   });
 
@@ -15,10 +16,11 @@ class ResponseDialogState extends Equatable {
       );
 
   final Widget title;
+  final Widget? subtitle;
   final IconData iconData;
   final ResponseDialogTheme type;
   final List<Widget>? content;
 
   @override
-  List<Object?> get props => [title, iconData, type, content];
+  List<Object?> get props => [title, subtitle, iconData, type, content];
 }

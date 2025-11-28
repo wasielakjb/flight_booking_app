@@ -18,6 +18,7 @@ class ResponseDialogWrapper extends StatelessWidget {
         await ResponseDialog.show(
           context: context,
           title: state.title,
+          subtitle: state.subtitle,
           iconData: state.iconData,
           type: state.type,
           content: state.content,

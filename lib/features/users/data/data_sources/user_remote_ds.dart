@@ -17,9 +17,8 @@ class UserRemoteDataSource extends RemoteDataSource<NetworkUser> {
   CollectionReference<Json> get collection => firestore.collection('users');
 
   @override
-  Future<NetworkUser> create(Json payload) async {
-    final id = payload['id'] as String;
-    await collection.doc(id).set(payload);
+  Future<NetworkUser> create(String id, Json payload) async {
+    await collection.doc(id).set({...payload, 'id': id});
     return get(id);
   }
 

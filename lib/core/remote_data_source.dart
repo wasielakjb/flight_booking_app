@@ -8,7 +8,7 @@ abstract class RemoteDataSource<T extends Object> {
 
   Future<List<T>> getAll();
 
-  Future<T> create(Json payload);
+  Future<T> create(String id, Json payload);
 
   Future<T> update(String id, Json payload);
 
