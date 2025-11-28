@@ -4,10 +4,9 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'user_request.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake, createFactory: false)
+@JsonSerializable(fieldRename: FieldRename.snake)
 class UserRequest implements FormRequest {
   UserRequest({
-    required this.id,
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -15,7 +14,8 @@ class UserRequest implements FormRequest {
     required this.dateOfBirth,
   });
 
-  final String id;
+  factory UserRequest.fromJson(Json json) => _$UserRequestFromJson(json);
+
   final String firstName;
   final String lastName;
   final String email;

@@ -1,3 +1,4 @@
+import 'package:flight_booking_app/theme/app_custom_colors.dart';
 import 'package:flutter/material.dart';
 
 extension ColorSchemeExtension on BuildContext {
@@ -47,4 +48,19 @@ extension ColorSchemeExtension on BuildContext {
   Color get shadow => Theme.of(this).colorScheme.shadow;
   Color get scrim => Theme.of(this).colorScheme.scrim;
   Color get surfaceTint => Theme.of(this).colorScheme.surfaceTint;
+
+
+  Color get success => Theme.of(this).extension<AppCustomColors>()!.success!;
+  Color get onSuccess => Theme.of(this).extension<AppCustomColors>()!.onSuccess!;
+  Color get successContainer => Theme.of(this).extension<AppCustomColors>()!.successContainer!;
+  Color get onSuccessContainer => Theme.of(this).extension<AppCustomColors>()!.onSuccessContainer!;
+  Color get info => Theme.of(this).extension<AppCustomColors>()!.info!;
+  Color get onInfo => Theme.of(this).extension<AppCustomColors>()!.onInfo!;
+  Color get infoContainer => Theme.of(this).extension<AppCustomColors>()!.infoContainer!;
+  Color get onInfoContainer => Theme.of(this).extension<AppCustomColors>()!.onInfoContainer!;
+  Color get warning => Theme.of(this).extension<AppCustomColors>()!.warning!;
+  Color get onWarning => Theme.of(this).extension<AppCustomColors>()!.onWarning!;
+  Color get warningContainer => Theme.of(this).extension<AppCustomColors>()!.warningContainer!;
+  Color get onWarningContainer => Theme.of(this).extension<AppCustomColors>()!.onWarningContainer!;
+
 }

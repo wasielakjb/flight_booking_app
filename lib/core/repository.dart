@@ -8,9 +8,9 @@ abstract class Repository<T extends Object> {
 
   Future<List<T>> getAll();
 
-  Future<void> create(covariant FormRequest request);
+  Future<T> create(covariant FormRequest request);
 
-  Future<void> update(String id, covariant FormRequest request);
+  Future<T> update(String id, covariant FormRequest request);
 
   Future<void> delete(String id);
 }

@@ -1,9 +1,11 @@
+import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
 import 'package:flight_booking_app/extensions/kotlin_extensions.dart';
 import 'package:flight_booking_app/extensions/text_theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class FormDateTimeField extends StatelessWidget {
   FormDateTimeField({
@@ -21,7 +23,7 @@ class FormDateTimeField extends StatelessWidget {
   }) : super(key: ValueKey(formName));
 
   final String formName;
-  final String? initialValue;
+  final DateTime? initialValue;
   final String? label;
   final String? Function(DateTime?)? validator;
   final List<TextInputFormatter> inputFormatters;
@@ -34,32 +36,42 @@ class FormDateTimeField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (label != null)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
-            child: Text(label!, style: context.labelLarge),
-          ),
-        FormBuilderDateTimePicker(
-          name: formName,
-          validator: validator,
-          inputFormatters: inputFormatters,
-          decoration: InputDecoration(
-            hintText: placeholder,
-            errorMaxLines: 2,
-            suffix: suffix,
-          ),
-          inputType: InputType.date,
-          format: DateFormat('dd MMM yyyy'),
-          valueTransformer: (value) => value.let(DateFormat('dd MMM yyyy').format),
-          obscureText: obscureText,
-          keyboardType: keyboardType,
-          textCapitalization: textCapitalization,
-          maxLines: maxLines,
+    return Skeleton.replace(
+      replacement: Container(
+        height: 46,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: context.surfaceContainer,
         ),
-      ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (label != null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
+              child: Text(label!, style: context.labelLarge),
+            ),
+          FormBuilderDateTimePicker(
+            name: formName,
+            initialDate: initialValue,
+            validator: validator,
+            inputFormatters: inputFormatters,
+            decoration: InputDecoration(
+              hintText: placeholder,
+              errorMaxLines: 2,
+              suffix: suffix,
+            ),
+            inputType: InputType.date,
+            format: DateFormat('dd MMM yyyy'),
+            valueTransformer: (value) => value.let(DateFormat('dd MMM yyyy').format),
+            obscureText: obscureText,
+            keyboardType: keyboardType,
+            textCapitalization: textCapitalization,
+            maxLines: maxLines,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -33,6 +33,7 @@ dependencies:
   json_annotation: ^4.9.0
   rxdart: ^0.28.0
   skeletonizer: ^1.4.3
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:

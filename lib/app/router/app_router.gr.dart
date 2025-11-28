@@ -132,7 +132,7 @@ class SettingsRoute extends _i10.PageRouteInfo<void> {
   static _i10.PageInfo page = _i10.PageInfo(
     name,
     builder: (data) {
-      return _i10.WrappedRoute(child: const _i7.SettingsPage());
+      return const _i7.SettingsPage();
     },
   );
 }

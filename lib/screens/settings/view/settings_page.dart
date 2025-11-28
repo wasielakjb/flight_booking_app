@@ -1,9 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flight_booking_app/app/router/app_router.gr.dart';
-import 'package:flight_booking_app/di.dart';
 import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
 import 'package:flight_booking_app/features/users/cubit/user_cubit.dart';
-import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';
 import 'package:flight_booking_app/screens/settings/widgets/settings_navigation_wgt.dart';
 import 'package:flight_booking_app/screens/settings/widgets/settings_profile_header_wgt.dart';
 import 'package:flight_booking_app/templates/app_navigation_bar.dart';
@@ -13,19 +11,8 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
-class SettingsPage extends StatelessWidget implements AutoRouteWrapper {
+class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (_) => UserCubit(
-        repository: inject<UserRepository>(),
-        authUser: context.read<AuthCubit>().currentUser!,
-      ),
-      child: this,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +26,10 @@ class SettingsPage extends StatelessWidget implements AutoRouteWrapper {
             children: [
               BlocBuilder<UserCubit, UserState>(
                 builder: (context, state) => SettingsProfileHeaderWidget(
-                  title: state.current?.firstName ?? BoneMock.name,
+                  title: state.current?.fullName ?? BoneMock.fullName,
                   subtitle: state.current?.email ?? BoneMock.email,
-                  isPending: state.isPending,
+                  letter: state.current?.nameLetter ?? BoneMock.chars(2),
+                  isPending: state.status.isLoading,
                 ),
               ),
               const SizedBox(height: 32),

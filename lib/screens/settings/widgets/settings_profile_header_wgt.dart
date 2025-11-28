@@ -1,22 +1,21 @@
 import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
 import 'package:flight_booking_app/extensions/text_theme_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class SettingsProfileHeaderWidget extends StatelessWidget {
   const SettingsProfileHeaderWidget({
     required this.title,
     required this.subtitle,
+    required this.letter,
     required this.isPending,
-    this.image,
     super.key,
   });
 
   final String title;
   final String subtitle;
   final bool isPending;
-  final String? image;
+  final String letter;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +30,7 @@ class SettingsProfileHeaderWidget extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 70,
                   backgroundColor: context.surfaceContainerHighest,
-                  child: image == null
-                      ? const Icon(Iconsax.image_outline, size: 48)
-                      : null,
+                  child: Text(letter, style: context.displayLarge),
                 ),
               ),
             ),

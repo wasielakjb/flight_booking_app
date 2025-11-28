@@ -4,10 +4,12 @@ import 'package:flight_booking_app/templates/phone_prefix_selector_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class FormPhoneNumberField extends StatelessWidget {
   FormPhoneNumberField({
     required this.formName,
+    this.initialValue,
     this.label,
     this.placeholder,
     this.allowCountryCodeChange = true,
@@ -15,6 +17,7 @@ class FormPhoneNumberField extends StatelessWidget {
   }) : super(key: ValueKey(formName));
 
   final String formName;
+  final String? initialValue;
   final String? label;
   final String? placeholder;
   final bool allowCountryCodeChange;
@@ -22,26 +25,36 @@ class FormPhoneNumberField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (label != null)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
-            child: Text(label!, style: context.labelLarge),
-          ),
-        FormBuilderField<String>(
-          name: formName,
-          validator: validator,
-          builder: (field) => PhoneNumberField(
-            initialValue: field.value,
-            onChanged: field.didChange,
-            allowCountryCodeChange: allowCountryCodeChange,
-            placeholder: placeholder,
-            errorText: field.errorText,
-          ),
+    return Skeleton.replace(
+      replacement: Container(
+        height: 46,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: context.surfaceContainer,
         ),
-      ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (label != null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
+              child: Text(label!, style: context.labelLarge),
+            ),
+          FormBuilderField<String>(
+            name: formName,
+            validator: validator,
+            initialValue: initialValue,
+            builder: (field) => PhoneNumberField(
+              initialValue: field.value,
+              onChanged: field.didChange,
+              allowCountryCodeChange: allowCountryCodeChange,
+              placeholder: placeholder,
+              errorText: field.errorText,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

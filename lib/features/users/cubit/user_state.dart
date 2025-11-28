@@ -3,22 +3,22 @@ part of 'user_cubit.dart';
 class UserState extends Equatable {
   const UserState({
     this.current,
-    this.isPending = true,
     this.errorMsg,
+    this.status = ResourceStatus.initial,
   });
 
   final UserResource? current;
-  final bool isPending;
+  final ResourceStatus status;
   final String? errorMsg;
 
   UserState copyWith({
     UserResource? current,
-    bool? isPending,
+    ResourceStatus? status,
     String? errorMsg,
   }) {
     return UserState(
       current: current ?? this.current,
-      isPending: isPending ?? this.isPending,
+      status: status ?? this.status,
       errorMsg: errorMsg ?? this.errorMsg,
     );
   }
@@ -26,7 +26,7 @@ class UserState extends Equatable {
   @override
   List<Object?> get props => [
         current,
-        isPending,
+        status,
         errorMsg,
       ];
 }

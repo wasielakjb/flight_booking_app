@@ -67,7 +67,6 @@ class AuthCubit extends Cubit<AuthState> {
 extension on RegisterCredentials {
   UserRequest toUserRequest(String id) {
     return UserRequest(
-      id: id,
       firstName: firstName,
       lastName: lastName,
       email: email,

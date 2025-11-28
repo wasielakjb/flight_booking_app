@@ -1,4 +1,5 @@
 import 'package:flight_booking_app/theme/app_color_scheme.dart';
+import 'package:flight_booking_app/theme/app_custom_colors.dart';
 import 'package:flight_booking_app/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -31,6 +32,8 @@ class AppTheme {
       ),
       labelStyle: lightTextTheme.bodyLarge,
       contentPadding: const EdgeInsets.symmetric(vertical: 12.5, horizontal: 13),
+      filled: true,
+      fillColor: lightColorScheme.surfaceContainer,
     ),
     searchBarTheme: SearchBarThemeData(
       elevation: const WidgetStatePropertyAll(0),
@@ -44,7 +47,10 @@ class AppTheme {
         ),
       ),
     ),
-    extensions: [lightSkeletonizerConfig],
+    extensions: [
+      AppCustomColors.light,
+      lightSkeletonizerConfig,
+    ],
   );
 
   static SkeletonizerConfigData lightSkeletonizerConfig = SkeletonizerConfigData(
@@ -73,8 +79,13 @@ class AppTheme {
       ),
       labelStyle: darkTextTheme.bodyLarge,
       contentPadding: const EdgeInsets.symmetric(vertical: 12.5, horizontal: 13),
+      filled: true,
+      fillColor: darkColorScheme.surfaceContainer,
     ),
-    extensions: [darkSkeletonizerConfig],
+    extensions: [
+      AppCustomColors.dark,
+      darkSkeletonizerConfig,
+    ],
   );
 
   static SkeletonizerConfigData darkSkeletonizerConfig = SkeletonizerConfigData(

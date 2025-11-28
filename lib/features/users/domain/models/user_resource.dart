@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake, createFactory: false)
 class UserResource extends Equatable {
   const UserResource({
     required this.id,
@@ -18,6 +16,9 @@ class UserResource extends Equatable {
   final String email;
   final String? phone;
   final DateTime? dateOfBirth;
+
+  String get fullName => '$firstName $lastName';
+  String get nameLetter => '${firstName[0]}${lastName[0]}';
 
   @override
   List<Object?> get props => [
