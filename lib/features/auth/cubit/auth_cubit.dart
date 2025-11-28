@@ -30,6 +30,8 @@ class AuthCubit extends Cubit<AuthState> {
   @protected
   final UserRepository userRepository;
 
+  AuthUser? get currentUser => authRepository.user;
+
   Future<void> login(LoginCredentials credentials) async {
     try {
       emit(const AuthLoading());

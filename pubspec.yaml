@@ -32,6 +32,7 @@ dependencies:
   cloud_firestore: ^6.1.0
   json_annotation: ^4.9.0
   rxdart: ^0.28.0
+  skeletonizer: ^1.4.3
 
 dev_dependencies:
   flutter_test:

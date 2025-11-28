@@ -1,17 +1,31 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flight_booking_app/app/router/app_router.gr.dart';
+import 'package:flight_booking_app/di.dart';
 import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
+import 'package:flight_booking_app/features/users/cubit/user_cubit.dart';
+import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';
 import 'package:flight_booking_app/screens/settings/widgets/settings_navigation_wgt.dart';
 import 'package:flight_booking_app/screens/settings/widgets/settings_profile_header_wgt.dart';
 import 'package:flight_booking_app/templates/app_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatelessWidget implements AutoRouteWrapper {
   const SettingsPage({super.key});
 
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (_) => UserCubit(
+        repository: inject<UserRepository>(),
+        authUser: context.read<AuthCubit>().currentUser!,
+      ),
+      child: this,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +37,12 @@ class SettingsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SettingsProfileHeaderWidget(
-                title: 'John Snow',
-                subtitle: 'john.snow@example.com',
+              BlocBuilder<UserCubit, UserState>(
+                builder: (context, state) => SettingsProfileHeaderWidget(
+                  title: state.current?.firstName ?? BoneMock.name,
+                  subtitle: state.current?.email ?? BoneMock.email,
+                  isPending: state.isPending,
+                ),
               ),
               const SizedBox(height: 32),
               const SettingsNavigationWidget(

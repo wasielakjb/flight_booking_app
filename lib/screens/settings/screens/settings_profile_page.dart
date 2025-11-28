@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flight_booking_app/di.dart';
 import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
 import 'package:flight_booking_app/features/users/cubit/user_cubit.dart';
-import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';
 import 'package:flight_booking_app/templates/form/form_date_time_field.dart';
 import 'package:flight_booking_app/templates/form/form_phone_number_field.dart';
 import 'package:flight_booking_app/templates/form/form_text_field.dart';
@@ -14,18 +12,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 @RoutePage()
-class SettingsProfilePage extends StatefulWidget implements AutoRouteWrapper {
+class SettingsProfilePage extends StatefulWidget {
   const SettingsProfilePage({super.key});
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (_) => UserCubit(
-        repository: inject<UserRepository>(),
-      ),
-      child: this,
-    );
-  }
 
   @override
   State<SettingsProfilePage> createState() => _SettingsProfilePageState();

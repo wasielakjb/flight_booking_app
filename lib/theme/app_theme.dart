@@ -1,6 +1,7 @@
 import 'package:flight_booking_app/theme/app_color_scheme.dart';
 import 'package:flight_booking_app/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class AppTheme {
   static ThemeData light = ThemeData(
@@ -43,6 +44,14 @@ class AppTheme {
         ),
       ),
     ),
+    extensions: [lightSkeletonizerConfig],
+  );
+
+  static SkeletonizerConfigData lightSkeletonizerConfig = SkeletonizerConfigData(
+    effect: ShimmerEffect(
+      baseColor: lightColorScheme.surfaceContainerHigh,
+      highlightColor: lightColorScheme.surfaceContainerHighest,
+    ),
   );
 
   static ThemeData dark = ThemeData(
@@ -64,6 +73,14 @@ class AppTheme {
       ),
       labelStyle: darkTextTheme.bodyLarge,
       contentPadding: const EdgeInsets.symmetric(vertical: 12.5, horizontal: 13),
+    ),
+    extensions: [darkSkeletonizerConfig],
+  );
+
+  static SkeletonizerConfigData darkSkeletonizerConfig = SkeletonizerConfigData(
+    effect: ShimmerEffect(
+      baseColor: darkColorScheme.surfaceContainerHigh,
+      highlightColor: darkColorScheme.surfaceContainerHighest,
     ),
   );
 }
