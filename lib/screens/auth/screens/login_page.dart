@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
           listenWhen: (previous, current) => current is AuthError,
           listener: (context, state) {
             responseDialog.error(
-              const Text('Failure'),
+              title: const Text('Failure'),
               subtitle: Text((state as AuthError).message),
               content: [
                 ResponseDialogAction(

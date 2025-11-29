@@ -48,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
               current is AuthError && current is Unauthenticated,
           listener: (context, state) {
             responseDialog.error(
-              const Text('Failure'),
+              title: const Text('Failure'),
               subtitle: Text((state as AuthError).message),
               content: [
                 ResponseDialogAction(

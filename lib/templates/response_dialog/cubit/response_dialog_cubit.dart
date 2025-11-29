@@ -10,7 +10,7 @@ part 'response_dialog_state.dart';
 class ResponseDialogCubit extends Cubit<ResponseDialogState> {
   ResponseDialogCubit() : super(ResponseDialogState.initial());
 
-  void success(Widget title, {Widget? subtitle, IconData? iconData, List<Widget>? content}) {
+  void success({required Widget title, Widget? subtitle, IconData? iconData, List<Widget>? content}) {
     emit(
       ResponseDialogState(
         title: title,
@@ -45,7 +45,7 @@ class ResponseDialogCubit extends Cubit<ResponseDialogState> {
     );
   }
 
-  void error(Widget title, {Widget? subtitle, IconData? iconData, List<Widget>? content}) {
+  void error({required Widget title, Widget? subtitle, IconData? iconData, List<Widget>? content}) {
     emit(
       ResponseDialogState(
         title: title,
