@@ -5,17 +5,16 @@ import 'package:flight_booking_app/extensions/text_theme_extension.dart';
 import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
 import 'package:flight_booking_app/features/auth/domain/models/login_credentials.dart';
 import 'package:flight_booking_app/templates/any_button_content.dart';
+import 'package:flight_booking_app/templates/divider_wgt.dart';
+import 'package:flight_booking_app/templates/form/form_password_field.dart';
 import 'package:flight_booking_app/templates/form/form_text_field.dart';
-import 'package:flight_booking_app/templates/response_dialog/cubit/response_dialog_cubit.dart';
-import 'package:flight_booking_app/templates/response_dialog/models/response_dialog_theme.dart';
-import 'package:flight_booking_app/templates/response_dialog/response_dialog_action.dart';
-import 'package:flight_booking_app/templates/response_dialog/response_dialog_action_divider.dart';
+import 'package:flight_booking_app/templates/toastr/models/app_toastr.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -26,121 +25,131 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-
+  final _formKey = GlobalKey<FormBuilderState>();
   FormBuilderState? get formState => _formKey.currentState;
-  AuthCubit get cubit => context.read<AuthCubit>();
-  ResponseDialogCubit get responseDialog => context.read<ResponseDialogCubit>();
-
-  Future<void> submit() async {
-    if (!(formState?.saveAndValidate() ?? false)) return;
-
-    final data = LoginCredentials.fromJson(formState!.instantValue);
-    await cubit.login(data);
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: BlocListener<AuthCubit, AuthState>(
-          listenWhen: (previous, current) => current is AuthError,
-          listener: (context, state) {
-            responseDialog.error(
-              title: const Text('Failure'),
-              subtitle: Text((state as AuthError).message),
-              content: [
-                ResponseDialogAction(
-                  action: context.maybePop,
-                  text: 'Back',
-                  type: ResponseDialogTheme.error,
-                  primary: false,
-                ),
-                const ResponseDialogActionDivider(),
-                ResponseDialogAction(
-                  action: () {
-                    context.maybePop();
-                    submit();
-                  },
-                  text: 'Try again',
-                  type: ResponseDialogTheme.error,
-                ),
-              ],
-            );
-          },
+    return BlocConsumer<AuthCubit, AuthState>(
+      listenWhen: (prev, curr) => prev.status != curr.status,
+      listener: (context, state) {
+        if (state.status.isError) {
+          AppToastr.error(context, state.errorMsg!);
+        }
+      },
+      builder: (context, state) => Scaffold(
+        body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
             child: FormBuilder(
               key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: Icon(
-                      Iconsax.airplane_square_bold,
-                      size: 80,
-                      color: context.primary,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  Text('F L I G H T   B O O K I N G', style: context.titleLarge),
-                  const SizedBox(height: 48),
-                  FormTextField(
-                    formName: 'email',
-                    label: 'Email',
-                    placeholder: 'Enter e-mail',
-                    keyboardType: TextInputType.emailAddress,
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.email(),
-                    ]),
-                  ),
-                  const SizedBox(height: 18),
-                  FormTextField(
-                    formName: 'password',
-                    label: 'Password',
-                    placeholder: 'Enter password',
-                    obscureText: true,
-                    keyboardType: TextInputType.visiblePassword,
-                    validator: FormBuilderValidators.required(),
-                  ),
-                  const SizedBox(height: 4),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const AnyButtonContent.outlinedOrText(
-                        text: 'Forgot password',
+                  Column(
+                    spacing: 12,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Sign in to your Account',
+                        style: context.headlineLarge,
                       ),
-                    ),
+                      Text(
+                        'Enter your email and password to log in',
+                        style: context.bodySmall,
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 24),
-                  BlocBuilder<AuthCubit, AuthState>(
-                    builder: (context, state) => FilledButton(
-                      onPressed: state is AuthLoading ? null : submit,
+                  const SizedBox(height: 32),
+                  Column(
+                    spacing: 16,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      FormTextField(
+                        name: 'email',
+                        label: 'Email',
+                        placeholder: 'Enter your email',
+                        validator: FormBuilderValidators.email(),
+                      ),
+                      FormPasswordField(
+                        name: 'password',
+                        label: 'Password',
+                        placeholder: 'Enter your Password',
+                        validator: FormBuilderValidators.required(),
+                      ),
+                      Text(
+                        'Forgot Password ?',
+                        style: context.bodySmallBold
+                            .copyWith(color: context.primary),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    child: FilledButton(
+                      onPressed: () async {
+                        if (!(formState?.saveAndValidate() ?? false)) return;
+                        final cubit = context.read<AuthCubit>();
+                        await cubit.login(
+                          LoginCredentials.fromJson(formState!.instantValue),
+                        );
+                      },
                       child: AnyButtonContent.filled(
+                        text: 'Log In',
                         fullWidth: true,
-                        pending: state is AuthLoading,
-                        text: 'Login',
+                        pending: state.status.isLoading,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: "Don't have an account? ",
-                      style: context.bodyMedium,
-                      children: [
-                        TextSpan(
-                          text: 'Sign up',
-                          style: context.bodyMediumBold,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => context.pushRoute(
-                                  const RegisterRoute(),
-                                ),
+                  Column(
+                    spacing: 16,
+                    children: [
+                      const DividerWidget(label: 'Or'),
+                      OutlinedButton(
+                        onPressed: () {},
+                        child: AnyButtonContent.filled(
+                          text: 'Continue with Google',
+                          icon: SvgPicture.asset(
+                            'assets/icons/google.svg',
+                            width: 18,
+                            height: 18,
+                          ),
+                          fullWidth: true,
                         ),
-                      ],
+                      ),
+                      OutlinedButton(
+                        onPressed: () {},
+                        child: AnyButtonContent.filled(
+                          text: 'Continue with Apple',
+                          icon: SvgPicture.asset(
+                            'assets/icons/apple.svg',
+                            width: 18,
+                            height: 18,
+                          ),
+                          fullWidth: true,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  Align(
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: 'Don’t have an account?',
+                        style: context.bodySmall,
+                        children: [
+                          const WidgetSpan(child: SizedBox(width: 5)),
+                          TextSpan(
+                            text: 'Sign Up',
+                            style: context.bodySmallBold
+                                .copyWith(color: context.primary),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () =>
+                                  context.pushRoute(const RegisterRoute()),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

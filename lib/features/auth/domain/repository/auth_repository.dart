@@ -1,6 +1,4 @@
 import 'package:flight_booking_app/features/auth/data/data_sources/auth_remote_ds.dart';
-import 'package:flight_booking_app/features/auth/data/mappers/auth_user_mapper.dart';
-import 'package:flight_booking_app/features/auth/domain/models/auth_user.dart';
 import 'package:flight_booking_app/features/auth/domain/models/login_credentials.dart';
 import 'package:flight_booking_app/features/auth/domain/models/register_credentials.dart';
 import 'package:flutter/foundation.dart';
@@ -13,24 +11,20 @@ class AuthRepository {
   @protected
   final AuthRemoteDataSource remoteDS;
 
-  AuthUser? get user => remoteDS.user?.asAuthUser();
+  String? get userId => remoteDS.user?.uid;
 
   bool get isAuthenticated => remoteDS.user != null;
 
-  Stream<AuthUser?> get stream =>
-      remoteDS.stream.map((user) => user?.asAuthUser())
-          .distinct((prev, next) => prev?.id == next?.id);
+  Stream<String?> get stream => remoteDS.stream
+      .map((user) => user?.uid)
+      .distinct((prev, next) => prev == next);
 
-  Future<AuthUser> login(LoginCredentials payload) async {
-    return remoteDS
-        .login(payload.email, payload.password)
-        .then((res) => res.user!.asAuthUser());
+  Future<String> login(LoginCredentials payload) async {
+    return remoteDS.login(payload.email, payload.password);
   }
 
-  Future<AuthUser> register(RegisterCredentials payload) async {
-    return remoteDS
-        .register(payload.email, payload.password)
-        .then((res) => res.user!.asAuthUser());
+  Future<String> register(RegisterCredentials payload) async {
+    return remoteDS.register(payload.email, payload.password);
   }
 
   Future<void> logout() async {

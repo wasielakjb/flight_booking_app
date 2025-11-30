@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
-import 'package:flight_booking_app/features/auth/domain/models/auth_user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flight_booking_app/core/safe_emit_mixin.dart';
+import 'package:flight_booking_app/features/auth/domain/models/auth_status.dart';
 import 'package:flight_booking_app/features/auth/domain/models/login_credentials.dart';
 import 'package:flight_booking_app/features/auth/domain/models/register_credentials.dart';
 import 'package:flight_booking_app/features/auth/domain/repository/auth_repository.dart';
 import 'package:flight_booking_app/features/users/domain/models/user_request.dart';
+import 'package:flight_booking_app/features/users/domain/models/user_resource.dart';
 import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,15 +16,12 @@ import 'package:injectable/injectable.dart';
 part 'auth_state.dart';
 
 @singleton
-class AuthCubit extends Cubit<AuthState> {
+class AuthCubit extends Cubit<AuthState> with SafeEmit {
   AuthCubit({
     required this.authRepository,
     required this.userRepository,
-  }) : super(const AuthLoading()) {
-    if (authRepository.isAuthenticated) {
-      emit(Authenticated(authRepository.user!));
-    }
-    emit(const Unauthenticated());
+  }) : super(const AuthState()) {
+    _initialize();
   }
 
   @protected
@@ -30,48 +30,51 @@ class AuthCubit extends Cubit<AuthState> {
   @protected
   final UserRepository userRepository;
 
-  AuthUser? get currentUser => authRepository.user;
+  Future<void> _initialize()async{
+    if (authRepository.isAuthenticated) {
+      final user = await userRepository.get(authRepository.userId!);
+      emitSafely(state.copyWith(status: AuthStatus.authenticated, user: user));
+    }
+  }
 
   Future<void> login(LoginCredentials credentials) async {
     try {
-      emit(const AuthLoading());
-      final user = await authRepository.login(credentials);
-      emit(Authenticated(user));
-    } catch (e) {
-      emit(AuthError(e.toString()));
+      emitSafely(state.copyWith(status: AuthStatus.loading));
+      final id = await authRepository.login(credentials);
+      final user = await userRepository.get(id);
+      emitSafely(state.copyWith(status: AuthStatus.authenticated, user: user));
+    } on FirebaseAuthException catch (e) {
+      emitSafely(state.copyWith(status: AuthStatus.error, errorMsg: e.message));
     }
   }
 
   Future<void> register(RegisterCredentials data) async {
     try {
-      emit(const AuthLoading());
-      final user = await authRepository.register(data);
-      await userRepository.create(user.id, data.toUserRequest());
-      emit(Authenticated(user));
-    } catch (e) {
-      emit(AuthError(e.toString()));
+      emitSafely(state.copyWith(status: AuthStatus.loading));
+      final id = await authRepository.register(data);
+      final user = await userRepository.create(id, data.toUserRequest());
+      emitSafely(state.copyWith(status: AuthStatus.authenticated, user: user));
+    } on FirebaseAuthException catch (e) {
+      emitSafely(state.copyWith(status: AuthStatus.error, errorMsg: e.message));
     }
   }
 
   Future<void> logout() async {
     try {
-      emit(const AuthLoading());
+      emitSafely(state.copyWith(status: AuthStatus.loading));
       await authRepository.logout();
-      emit(const Unauthenticated());
-    } catch (e) {
-      emit(AuthError(e.toString()));
+      emitSafely(state.copyWith(status: AuthStatus.unauthenticated));
+    } on FirebaseAuthException catch (e) {
+      emitSafely(state.copyWith(status: AuthStatus.error, errorMsg: e.message));
     }
   }
 }
 
 extension on RegisterCredentials {
-  UserRequest toUserRequest() {
-    return UserRequest(
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      phone: null,
-      dateOfBirth: null,
-    );
-  }
+  UserRequest toUserRequest() => UserRequest(
+        fullName: fullName,
+        email: email,
+        birthOfDate: birthOfDate,
+        phoneNumer: phoneNumer,
+      );
 }

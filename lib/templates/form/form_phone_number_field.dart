@@ -8,15 +8,15 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class FormPhoneNumberField extends StatelessWidget {
   FormPhoneNumberField({
-    required this.formName,
+    required this.name,
     this.initialValue,
     this.label,
     this.placeholder,
     this.allowCountryCodeChange = true,
     this.validator,
-  }) : super(key: ValueKey(formName));
+  }) : super(key: ValueKey(name));
 
-  final String formName;
+  final String name;
   final String? initialValue;
   final String? label;
   final String? placeholder;
@@ -34,15 +34,18 @@ class FormPhoneNumberField extends StatelessWidget {
         ),
       ),
       child: Column(
+        spacing: 4,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (label != null)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
-              child: Text(label!, style: context.labelLarge),
+            Text(
+              label!,
+              style: context.bodySmall.copyWith(
+                color: context.onSurface.withValues(alpha: 0.8),
+              ),
             ),
           FormBuilderField<String>(
-            name: formName,
+            name: name,
             validator: validator,
             initialValue: initialValue,
             builder: (field) => PhoneNumberField(

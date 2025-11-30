@@ -1,38 +1,25 @@
-import 'package:equatable/equatable.dart';
 import 'package:flight_booking_app/extensions/json.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'network_user.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class NetworkUser extends Equatable {
+class NetworkUser {
   const NetworkUser({
     required this.id,
-    required this.firstName,
-    required this.lastName,
+    required this.fullName,
     required this.email,
-    required this.phone,
-    required this.dateOfBirth,
+    required this.birthOfDate,
+    required this.phoneNumer,
   });
 
   factory NetworkUser.fromJson(Json json) => _$NetworkUserFromJson(json);
 
   final String id;
-  final String firstName;
-  final String lastName;
+  final String fullName;
   final String email;
-  final String? phone;
-  final String? dateOfBirth;
+  final String birthOfDate;
+  final String phoneNumer;
 
   Json toJson() => _$NetworkUserToJson(this);
-
-  @override
-  List<Object?> get props => [
-        id,
-        firstName,
-        lastName,
-        email,
-        phone,
-        dateOfBirth,
-      ];
 }

@@ -11,18 +11,20 @@ class AuthRemoteDataSource {
 
   User? get user => firebaseAuth.currentUser;
 
-  Future<UserCredential> login(String email, String password) async {
-    return firebaseAuth.signInWithEmailAndPassword(
+  Future<String> login(String email, String password) async {
+    final userCredential = await firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+    return userCredential.user!.uid;
   }
 
-  Future<UserCredential> register(String email, String password) async {
-    return firebaseAuth.createUserWithEmailAndPassword(
+  Future<String> register(String email, String password) async {
+    final userCredential = await firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+    return userCredential.user!.uid;
   }
 
   Future<void> logout() async {

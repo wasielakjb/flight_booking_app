@@ -5,23 +5,29 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class FormTextField extends StatelessWidget {
+typedef SuffixBuilderCallback = Widget Function(
+  BuildContext context,
+  FormBuilderFieldState<FormBuilderTextField, String> control,
+);
+
+class FormTextField extends StatefulWidget {
   FormTextField({
-    required this.formName,
+    required this.name,
     this.initialValue,
     this.label,
     this.validator,
     this.placeholder,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
-    this.textCapitalization = TextCapitalization.sentences,
+    this.textCapitalization = TextCapitalization.none,
     this.inputFormatters = const [],
     this.maxLines = 1,
     this.suffix,
+    this.suffixBuilder,
     this.onTapOutside,
-  }) : super(key: ValueKey(formName));
+  }) : super(key: ValueKey(name));
 
-  final String formName;
+  final String name;
   final String? initialValue;
   final String? label;
   final String? Function(String?)? validator;
@@ -32,7 +38,17 @@ class FormTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final TextCapitalization textCapitalization;
   final int? maxLines;
+  final SuffixBuilderCallback? suffixBuilder;
   final void Function(PointerDownEvent)? onTapOutside;
+
+  @override
+  State<FormTextField> createState() => _FormTextFieldState();
+}
+
+class _FormTextFieldState extends State<FormTextField> {
+  final ValueNotifier<String?> text = ValueNotifier<String?>(null);
+  final control = FormBuilderFieldState<FormBuilderTextField, String>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,31 +61,40 @@ class FormTextField extends StatelessWidget {
         ),
       ),
       child: Column(
+        spacing: 4,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (label != null)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
-              child: Text(label!, style: context.labelLarge),
+          if (widget.label != null)
+            Text(
+              widget.label!,
+              style: context.bodySmall.copyWith(
+                color: context.onSurface.withValues(alpha: 0.8),
+              ),
             ),
           FormBuilderTextField(
-            name: formName,
-            initialValue: initialValue,
-            validator: validator,
-            inputFormatters: inputFormatters,
+            name: widget.name,
+            initialValue: widget.initialValue,
+            validator: widget.validator,
+            inputFormatters: widget.inputFormatters,
             decoration: InputDecoration(
-              hintText: placeholder,
+              hintText: widget.placeholder,
               errorMaxLines: 2,
-              suffix: suffix,
+              suffixIcon: ValueListenableBuilder<String?>(
+                valueListenable: text,
+                builder: (context, value, child) {
+                  if (widget.suffixBuilder == null) return const SizedBox();
+                  return widget.suffixBuilder!.call(context, control);
+                },
+              ),
             ),
-            obscureText: obscureText,
-            keyboardType: keyboardType,
-            textCapitalization: textCapitalization,
+            obscureText: widget.obscureText,
+            keyboardType: widget.keyboardType,
+            textCapitalization: widget.textCapitalization,
             onTapOutside: (value) {
-              onTapOutside?.call(value);
+              widget.onTapOutside?.call(value);
               FocusScope.of(context).unfocus();
             },
-            maxLines: maxLines,
+            maxLines: widget.maxLines,
           ),
         ],
       ),

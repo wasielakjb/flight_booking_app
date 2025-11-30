@@ -1,14 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flight_booking_app/app/router/app_router.gr.dart';
 import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
-import 'package:flight_booking_app/features/users/cubit/user_cubit.dart';
 import 'package:flight_booking_app/screens/settings/widgets/settings_navigation_wgt.dart';
 import 'package:flight_booking_app/screens/settings/widgets/settings_profile_header_wgt.dart';
 import 'package:flight_booking_app/templates/app_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
 class SettingsPage extends StatelessWidget {
@@ -24,12 +22,11 @@ class SettingsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BlocBuilder<UserCubit, UserState>(
+              BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, state) => SettingsProfileHeaderWidget(
-                  title: state.current?.fullName ?? BoneMock.fullName,
-                  subtitle: state.current?.email ?? BoneMock.email,
-                  letter: state.current?.nameLetter ?? BoneMock.chars(2),
-                  isPending: state.status.isLoading,
+                  title: state.user!.fullName,
+                  subtitle: state.user!.email,
+                  letter: state.user!.letter,
                 ),
               ),
               const SizedBox(height: 32),

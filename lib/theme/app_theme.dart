@@ -21,19 +21,19 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       floatingLabelBehavior: FloatingLabelBehavior.always,
       border: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         borderSide: BorderSide(color: lightColorScheme.outlineVariant),
       ),
       hintStyle: lightTextTheme.bodyLarge?.copyWith(
         color: lightColorScheme.onSurface.withValues(alpha: 0.4),
       ),
       labelStyle: lightTextTheme.bodyLarge,
-      contentPadding: const EdgeInsets.symmetric(vertical: 12.5, horizontal: 13),
-      filled: true,
-      fillColor: lightColorScheme.surfaceContainer,
+      contentPadding: const EdgeInsets.symmetric(vertical: 12.5, horizontal: 14),
+      // filled: true,
+      // fillColor: lightColorScheme.surfaceContainer,
     ),
     searchBarTheme: SearchBarThemeData(
       elevation: const WidgetStatePropertyAll(0),
@@ -45,6 +45,28 @@ class AppTheme {
         lightTextTheme.bodyLarge?.copyWith(
           color: lightColorScheme.onSurface.withValues(alpha: 0.6),
         ),
+      ),
+    ),
+    filledButtonTheme: FilledButtonThemeData(
+      style: ButtonStyle(
+        textStyle: WidgetStatePropertyAll(lightTextTheme.labelLarge),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        minimumSize: const WidgetStatePropertyAll(Size(150, 48)),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        textStyle: WidgetStatePropertyAll(lightTextTheme.labelLarge),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        side: WidgetStatePropertyAll(
+          BorderSide(color: lightColorScheme.outlineVariant),
+        ),
+        minimumSize: const WidgetStatePropertyAll(Size(150, 48)),
+        foregroundColor: WidgetStatePropertyAll(lightColorScheme.onSurface),
       ),
     ),
     extensions: [
@@ -68,19 +90,35 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       floatingLabelBehavior: FloatingLabelBehavior.always,
       border: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         borderSide: BorderSide(color: darkColorScheme.outlineVariant),
       ),
       hintStyle: darkTextTheme.bodyLarge?.copyWith(
         color: darkColorScheme.onSurface.withValues(alpha: 0.4),
       ),
       labelStyle: darkTextTheme.bodyLarge,
-      contentPadding: const EdgeInsets.symmetric(vertical: 12.5, horizontal: 13),
-      filled: true,
-      fillColor: darkColorScheme.surfaceContainer,
+      contentPadding: const EdgeInsets.symmetric(vertical: 12.5, horizontal: 14),
+    ),
+    filledButtonTheme: FilledButtonThemeData(
+      style: ButtonStyle(
+        textStyle: WidgetStatePropertyAll(darkTextTheme.labelLarge),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        minimumSize: const WidgetStatePropertyAll(Size(150, 48)),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        textStyle: WidgetStatePropertyAll(darkTextTheme.labelLarge),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        minimumSize: const WidgetStatePropertyAll(Size(150, 48)),
+      ),
     ),
     extensions: [
       AppCustomColors.dark,

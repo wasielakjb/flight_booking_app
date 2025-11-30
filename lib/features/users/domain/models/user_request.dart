@@ -7,20 +7,18 @@ part 'user_request.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class UserRequest implements FormRequest {
   UserRequest({
-    required this.firstName,
-    required this.lastName,
+    required this.fullName,
     required this.email,
-    required this.phone,
-    required this.dateOfBirth,
+    required this.birthOfDate,
+    required this.phoneNumer,
   });
 
   factory UserRequest.fromJson(Json json) => _$UserRequestFromJson(json);
   
-  final String firstName;
-  final String lastName;
+  final String fullName;
   final String email;
-  final String? phone;
-  final String? dateOfBirth;
+  final String birthOfDate;
+  final String phoneNumer;
 
   @override
   Json toJson() => _$UserRequestToJson(this);

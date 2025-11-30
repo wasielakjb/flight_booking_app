@@ -9,7 +9,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class FormDateTimeField extends StatelessWidget {
   FormDateTimeField({
-    required this.formName,
+    required this.name,
     this.initialValue,
     this.label,
     this.validator,
@@ -20,9 +20,9 @@ class FormDateTimeField extends StatelessWidget {
     this.inputFormatters = const [],
     this.maxLines = 1,
     this.suffix,
-  }) : super(key: ValueKey(formName));
+  }) : super(key: ValueKey(name));
 
-  final String formName;
+  final String name;
   final DateTime? initialValue;
   final String? label;
   final String? Function(DateTime?)? validator;
@@ -45,15 +45,18 @@ class FormDateTimeField extends StatelessWidget {
         ),
       ),
       child: Column(
+        spacing: 4,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (label != null)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 0, 0, 8),
-              child: Text(label!, style: context.labelLarge),
+            Text(
+              label!,
+              style: context.bodySmall.copyWith(
+                color: context.onSurface.withValues(alpha: 0.8),
+              ),
             ),
           FormBuilderDateTimePicker(
-            name: formName,
+            name: name,
             initialDate: initialValue,
             validator: validator,
             inputFormatters: inputFormatters,

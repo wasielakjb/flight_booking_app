@@ -50,7 +50,7 @@ class AnyButtonContent extends StatelessWidget {
   final String? text;
   final bool pending;
   final bool fullWidth;
-  final Icon? icon;
+  final Widget? icon;
   final bool iconRight;
 
   @override
@@ -65,7 +65,7 @@ class AnyButtonContent extends StatelessWidget {
             children: [
               if (icon != null && !iconRight) ...[
                 icon!,
-                const SizedBox(width: 6),
+                const SizedBox(width: 10),
               ],
               if (text != null) Text(text!),
               if (icon != null && iconRight) ...[
