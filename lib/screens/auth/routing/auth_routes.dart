@@ -17,6 +17,10 @@ class AuthRoutes {
               path: 'register',
               page: RegisterRoute.page,
             ),
+            AutoRoute(
+              path: 'forgot-password',
+              page: ForgotPasswordRoute.page,
+            ),
           ],
         ),
       ];

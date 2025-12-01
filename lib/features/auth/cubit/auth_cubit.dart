@@ -57,6 +57,16 @@ class AuthCubit extends Cubit<AuthState> with SafeEmit {
     }
   }
 
+  Future<void> resetPassword(String email) async {
+    try {
+      emitSafely(state.copyWith(status: AuthStatus.loading));
+      await authRepository.resetPassword(email);
+      emitSafely(state.copyWith(status: AuthStatus.initial));
+    } on FirebaseAuthException catch (e) {
+      emitSafely(state.copyWith(status: AuthStatus.error, errorMsg: e.message));
+    }
+  }
+
   Future<void> logout() async {
     try {
       emitSafely(state.copyWith(status: AuthStatus.loading));

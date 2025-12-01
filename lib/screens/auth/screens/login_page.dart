@@ -77,10 +77,16 @@ class _LoginPageState extends State<LoginPage> {
                         placeholder: 'Enter your Password',
                         validator: FormBuilderValidators.required(),
                       ),
-                      Text(
-                        'Forgot Password ?',
-                        style: context.bodySmallBold
-                            .copyWith(color: context.primary),
+                      GestureDetector(
+                        onTap: () => context.pushRoute(
+                          const ForgotPasswordRoute(),
+                        ),
+                        child: Text(
+                          'Forgot Password ?',
+                          style: context.bodySmallBold.copyWith(
+                            color: context.primary,
+                          ),
+                        ),
                       ),
                     ],
                   ),

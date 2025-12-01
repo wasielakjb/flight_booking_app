@@ -27,6 +27,10 @@ class AuthRemoteDataSource {
     return userCredential.user!.uid;
   }
 
+  Future<void> resetPassword(String email) async {
+    return firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
   Future<void> logout() async {
     await firebaseAuth.signOut();
   }

@@ -27,6 +27,10 @@ class AuthRepository {
     return remoteDS.register(payload.email, payload.password);
   }
 
+  Future<void> resetPassword(String email) async {
+    return remoteDS.resetPassword(email);
+  }
+
   Future<void> logout() async {
     await remoteDS.logout();
   }
