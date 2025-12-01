@@ -34,8 +34,6 @@ class SettingsProfilePage extends StatefulWidget implements AutoRouteWrapper{
 class _SettingsProfilePageState extends State<SettingsProfilePage> {
   final _formKey = GlobalKey<FormBuilderState>();
   FormBuilderState? get formState => _formKey.currentState;
-  
-  DateTime date = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
