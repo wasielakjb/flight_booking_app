@@ -28,10 +28,12 @@ class AuthCubit extends Cubit<AuthState> with SafeEmit {
   @protected
   final UserRepository userRepository;
 
+  String? get userId => authRepository.userId;
+
   Future<void> _initialize() async {
     if (authRepository.isAuthenticated) {
-      final user = await userRepository.get(authRepository.userId!);
-      emitSafely(state.copyWith(status: AuthStatus.authenticated, userId: user.id));
+      await userRepository.get(authRepository.userId!);
+      emitSafely(state.copyWith(status: AuthStatus.authenticated));
     }
   }
 
@@ -39,8 +41,8 @@ class AuthCubit extends Cubit<AuthState> with SafeEmit {
     try {
       emitSafely(state.copyWith(status: AuthStatus.loading));
       final id = await authRepository.login(credentials);
-      final user = await userRepository.get(id);
-      emitSafely(state.copyWith(status: AuthStatus.authenticated, userId: user.id));
+      await userRepository.get(id);
+      emitSafely(state.copyWith(status: AuthStatus.authenticated));
     } on FirebaseAuthException catch (e) {
       emitSafely(state.copyWith(status: AuthStatus.error, errorMsg: e.message));
     }
@@ -50,8 +52,8 @@ class AuthCubit extends Cubit<AuthState> with SafeEmit {
     try {
       emitSafely(state.copyWith(status: AuthStatus.loading));
       final id = await authRepository.register(data);
-      final user = await userRepository.create(id, data);
-      emitSafely(state.copyWith(status: AuthStatus.authenticated, userId: user.id));
+      await userRepository.create(id, data);
+      emitSafely(state.copyWith(status: AuthStatus.authenticated));
     } on FirebaseAuthException catch (e) {
       emitSafely(state.copyWith(status: AuthStatus.error, errorMsg: e.message));
     }
