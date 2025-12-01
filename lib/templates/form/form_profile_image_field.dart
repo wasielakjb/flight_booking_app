@@ -5,14 +5,13 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class FormProfileImageField extends StatelessWidget {
-  const FormProfileImageField({
-    required this.formName,
+  FormProfileImageField({
+    required this.name,
     this.initialValue,
     this.validator,
-    super.key,
-  });
+  }): super(key: ValueKey(name));
 
-  final String formName;
+  final String name;
   final String? initialValue;
   final String? Function(String?)? validator;
 
@@ -20,7 +19,7 @@ class FormProfileImageField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Skeleton.leaf(
       child: FormBuilderField<String>(
-        name: formName,
+        name: name,
         initialValue: initialValue,
         validator: validator,
         builder: (field) => Stack(

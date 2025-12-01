@@ -1,5 +1,4 @@
 import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
-import 'package:flight_booking_app/extensions/kotlin_extensions.dart';
 import 'package:flight_booking_app/extensions/text_theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,11 +13,7 @@ class FormDateTimeField extends StatelessWidget {
     this.label,
     this.validator,
     this.placeholder,
-    this.obscureText = false,
-    this.keyboardType = TextInputType.text,
-    this.textCapitalization = TextCapitalization.sentences,
     this.inputFormatters = const [],
-    this.maxLines = 1,
     this.suffix,
   }) : super(key: ValueKey(name));
 
@@ -29,10 +24,6 @@ class FormDateTimeField extends StatelessWidget {
   final List<TextInputFormatter> inputFormatters;
   final String? placeholder;
   final Widget? suffix;
-  final bool obscureText;
-  final TextInputType keyboardType;
-  final TextCapitalization textCapitalization;
-  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +48,7 @@ class FormDateTimeField extends StatelessWidget {
             ),
           FormBuilderDateTimePicker(
             name: name,
-            initialDate: initialValue,
+            initialValue: initialValue,
             validator: validator,
             inputFormatters: inputFormatters,
             decoration: InputDecoration(
@@ -67,11 +58,8 @@ class FormDateTimeField extends StatelessWidget {
             ),
             inputType: InputType.date,
             format: DateFormat('dd MMM yyyy'),
-            valueTransformer: (value) => value.let(DateFormat('dd MMM yyyy').format),
-            obscureText: obscureText,
-            keyboardType: keyboardType,
-            textCapitalization: textCapitalization,
-            maxLines: maxLines,
+            keyboardType: TextInputType.datetime,
+            valueTransformer: (value) => value?.toIso8601String(),
           ),
         ],
       ),

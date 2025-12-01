@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flight_booking_app/core/resource_status.dart';
 import 'package:flight_booking_app/features/users/domain/models/user_request.dart';
 import 'package:flight_booking_app/features/users/domain/models/user_resource.dart';
@@ -11,24 +12,18 @@ part 'user_state.dart';
 class UserCubit extends Cubit<UserState> {
   UserCubit({
     required this.repository,
-    required String id,
+    required String userId,
   }) : super(const UserState()) {
-    _init(id);
+    _initialize(userId);
   }
 
   @protected
   final UserRepository repository;
-
-  Future<void> _init(String id) async {
-    try {
-      emit(state.copyWith(status: ResourceStatus.loading));
-      final user = await repository.get(id);
-      emit(state.copyWith(status: ResourceStatus.success, current: user));
-    } catch (e) {
-      emit(
-        state.copyWith(status: ResourceStatus.failure, errorMsg: e.toString()),
-      );
-    }
+  
+  Future<void> _initialize(String userId) async {
+    emit(state.copyWith(status: ResourceStatus.loading));
+    final user = await repository.get(userId);
+    emit(state.copyWith(status: ResourceStatus.success, current: user));
   }
 
   Future<void> update(UserRequest request) async {
@@ -36,8 +31,8 @@ class UserCubit extends Cubit<UserState> {
       emit(state.copyWith(status: ResourceStatus.loading));
       final user = await repository.update(state.current!.id, request);
       emit(state.copyWith(status: ResourceStatus.success, current: user));
-    } catch (e) {
-      emit(state.copyWith(status: ResourceStatus.failure, errorMsg: e.toString()));
+    } on FirebaseAuthException catch (e) {
+      emit(state.copyWith(status: ResourceStatus.failure, errorMsg: e.message));
     }
   }
 }

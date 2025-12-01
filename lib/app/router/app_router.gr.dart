@@ -11,6 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i10;
 import 'package:flight_booking_app/app/app.dart' as _i1;
+import 'package:flight_booking_app/features/users/cubit/user_cubit.dart'
+    as _i11;
 import 'package:flight_booking_app/screens/auth/screens/login_page.dart' as _i5;
 import 'package:flight_booking_app/screens/auth/screens/register_page.dart'
     as _i6;
@@ -24,6 +26,7 @@ import 'package:flight_booking_app/screens/settings/view/settings_page.dart'
     as _i7;
 import 'package:flight_booking_app/screens/tickets/view/tickets_page.dart'
     as _i9;
+import 'package:flutter/material.dart' as _i12;
 
 /// generated route for
 /// [_i1.AppViewPage]
@@ -132,25 +135,62 @@ class SettingsRoute extends _i10.PageRouteInfo<void> {
   static _i10.PageInfo page = _i10.PageInfo(
     name,
     builder: (data) {
-      return const _i7.SettingsPage();
+      return _i10.WrappedRoute(child: const _i7.SettingsPage());
     },
   );
 }
 
 /// generated route for
 /// [_i8.SettingsProfilePage]
-class SettingsProfileRoute extends _i10.PageRouteInfo<void> {
-  const SettingsProfileRoute({List<_i10.PageRouteInfo>? children})
-    : super(SettingsProfileRoute.name, initialChildren: children);
+class SettingsProfileRoute
+    extends _i10.PageRouteInfo<SettingsProfileRouteArgs> {
+  SettingsProfileRoute({
+    required _i11.UserCubit userCubit,
+    _i12.Key? key,
+    List<_i10.PageRouteInfo>? children,
+  }) : super(
+         SettingsProfileRoute.name,
+         args: SettingsProfileRouteArgs(userCubit: userCubit, key: key),
+         initialChildren: children,
+       );
 
   static const String name = 'SettingsProfileRoute';
 
   static _i10.PageInfo page = _i10.PageInfo(
     name,
     builder: (data) {
-      return const _i8.SettingsProfilePage();
+      final args = data.argsAs<SettingsProfileRouteArgs>();
+      return _i10.WrappedRoute(
+        child: _i8.SettingsProfilePage(
+          userCubit: args.userCubit,
+          key: args.key,
+        ),
+      );
     },
   );
+}
+
+class SettingsProfileRouteArgs {
+  const SettingsProfileRouteArgs({required this.userCubit, this.key});
+
+  final _i11.UserCubit userCubit;
+
+  final _i12.Key? key;
+
+  @override
+  String toString() {
+    return 'SettingsProfileRouteArgs{userCubit: $userCubit, key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! SettingsProfileRouteArgs) return false;
+    return userCubit == other.userCubit && key == other.key;
+  }
+
+  @override
+  int get hashCode => userCubit.hashCode ^ key.hashCode;
 }
 
 /// generated route for

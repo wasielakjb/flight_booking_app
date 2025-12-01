@@ -8,7 +8,6 @@ part 'user_request.g.dart';
 class UserRequest implements FormRequest {
   UserRequest({
     required this.fullName,
-    required this.email,
     required this.birthOfDate,
     required this.phoneNumer,
   });
@@ -16,8 +15,7 @@ class UserRequest implements FormRequest {
   factory UserRequest.fromJson(Json json) => _$UserRequestFromJson(json);
   
   final String fullName;
-  final String email;
-  final String birthOfDate;
+  final DateTime birthOfDate;
   final String phoneNumer;
 
   @override
