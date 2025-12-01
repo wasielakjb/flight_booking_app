@@ -11,6 +11,8 @@ class SettingsNavigationWidget extends StatelessWidget {
     this.showAction = true,
     this.route,
     this.onTap,
+    this.backgroundColor,
+    this.foregroundColor,
     super.key,
   });
 
@@ -19,6 +21,8 @@ class SettingsNavigationWidget extends StatelessWidget {
   final bool showAction;
   final PageRouteInfo<dynamic>? route;
   final VoidCallback? onTap;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +45,15 @@ class SettingsNavigationWidget extends StatelessWidget {
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(99),
-                color: context.surfaceContainerHighest,
+                color: backgroundColor ?? context.surfaceContainerHighest,
               ),
               child: Icon(
                 icon,
                 size: 20,
-                color: context.onSurface.withValues(alpha: 0.6),
+                color: foregroundColor ?? context.onSurface.withValues(alpha: 0.6),
               ),
             ),
-            Text(title, style: context.bodyLarge),
+            Text(title, style: context.bodyLarge.copyWith(color: foregroundColor)),
             const Spacer(),
             if (showAction) const Icon(Iconsax.arrow_right_3_outline, size: 18),
           ],

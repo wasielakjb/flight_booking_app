@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flight_booking_app/app/router/app_router.gr.dart';
 import 'package:flight_booking_app/di.dart';
+import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
 import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
 import 'package:flight_booking_app/features/users/cubit/user_cubit.dart';
 import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';
@@ -58,27 +59,33 @@ class SettingsPage extends StatelessWidget implements AutoRouteWrapper {
               const SettingsNavigationWidget(
                 title: 'Password',
                 icon: Iconsax.lock_outline,
+                route: SettingsChangePasswordRoute(),
               ),
               const Divider(indent: 24, endIndent: 24),
               const SettingsNavigationWidget(
                 title: 'Notifications',
                 icon: Iconsax.message_notif_outline,
+                route: SettingNotificationsRoute(),
               ),
               const Divider(indent: 24, endIndent: 24),
               const SettingsNavigationWidget(
                 title: 'Theme mode',
                 icon: Iconsax.moon_outline,
+                route: SettingsThemeRoute(),
               ),
               const Divider(indent: 24, endIndent: 24),
               const SettingsNavigationWidget(
                 title: 'About application',
                 icon: Iconsax.info_circle_outline,
+                route: SettingAboutApplicationRoute(),
               ),
               const Divider(indent: 24, endIndent: 24),
               SettingsNavigationWidget(
                 title: 'Logout',
                 icon: Iconsax.logout_1_outline,
                 showAction: false,
+                backgroundColor: context.errorContainer,
+                foregroundColor: context.error,
                 onTap: context.read<AuthCubit>().logout,
               ),
             ],

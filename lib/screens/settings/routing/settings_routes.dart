@@ -12,5 +12,21 @@ class SettingsRoutes {
           path: 'settings-profile',
           page: SettingsProfileRoute.page,
         ),
+        AutoRoute(
+          path: 'settings-password',
+          page: SettingsChangePasswordRoute.page,
+        ),
+        AutoRoute(
+          path: 'settings-notifications',
+          page: SettingNotificationsRoute.page,
+        ),
+        AutoRoute(
+          path: 'settings-theme',
+          page: SettingsThemeRoute.page,
+        ),
+        AutoRoute(
+          path: 'settings-about',
+          page: SettingAboutApplicationRoute.page,
+        ),
       ];
 }
