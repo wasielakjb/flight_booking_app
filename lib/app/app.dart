@@ -5,7 +5,6 @@ import 'package:flight_booking_app/app/router/app_router.dart';
 import 'package:flight_booking_app/di.dart';
 import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
 import 'package:flight_booking_app/features/auth/domain/repository/auth_repository.dart';
-import 'package:flight_booking_app/templates/response_dialog/cubit/response_dialog_cubit.dart';
 import 'package:flight_booking_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +23,6 @@ class App extends StatelessWidget {
         BlocProvider(create: (_) => inject<AppLocaleCubit>()),
         BlocProvider(create: (_) => inject<AppThemeCubit>()),
         BlocProvider(create: (_) => inject<AuthCubit>()),
-        BlocProvider(create: (_) => inject<ResponseDialogCubit>()),
       ],
       child: BlocBuilder<AppThemeCubit, ThemeMode>(
         builder: (context, theme) => BlocBuilder<AppLocaleCubit, Locale>(

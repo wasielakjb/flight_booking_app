@@ -7,4 +7,6 @@ class AppThemeCubit extends Cubit<ThemeMode> {
   AppThemeCubit() : super(ThemeMode.system);
 
   ThemeMode get theme => state;
+
+  void updateTheme(ThemeMode theme) => emit(theme);
 }

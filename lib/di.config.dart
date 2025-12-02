@@ -26,8 +26,6 @@ import 'package:flight_booking_app/features/users/data/data_sources/user_remote_
     as _i364;
 import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart'
     as _i74;
-import 'package:flight_booking_app/templates/response_dialog/cubit/response_dialog_cubit.dart'
-    as _i130;
 import 'package:flight_booking_app/templates/toastr/cubit/toastr_cubit.dart'
     as _i927;
 import 'package:get_it/get_it.dart' as _i174;
@@ -53,7 +51,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i533.AppLocaleCubit>(() => _i533.AppLocaleCubit());
     gh.singleton<_i204.AuthRemoteDataSource>(
         () => _i204.AuthRemoteDataSource());
-    gh.singleton<_i130.ResponseDialogCubit>(() => _i130.ResponseDialogCubit());
     gh.singleton<_i927.ToastrCubit>(() => _i927.ToastrCubit());
     gh.lazySingleton<_i974.FirebaseFirestore>(() => appModule.firestore);
     gh.singleton<_i364.UserRemoteDataSource>(
