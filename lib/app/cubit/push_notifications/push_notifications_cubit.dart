@@ -53,8 +53,7 @@ class PushNotificationsCubit extends HydratedCubit<PushNotificationsState> {
     return const NotificationDetails(android: androidDetails, iOS: iosDetails);
   }
 
-  Future<void> showNotification(
-      {int id = 0, String? title, String? body}) async {
+  Future<void> showNotification({int id = 0, String? title, String? body}) async {
     await notificationsPlugin.show(id, title, body, notificationDetails());
   }
 
