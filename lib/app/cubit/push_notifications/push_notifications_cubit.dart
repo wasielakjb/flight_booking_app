@@ -71,11 +71,11 @@ class PushNotificationsCubit extends HydratedCubit<PushNotificationsState> {
   }
 
   @override
-  PushNotificationsState fromJson(Json json) {
+  PushNotificationsState? fromJson(Json json) {
     return PushNotificationsState(
-      gateChangeEnabled: json['gateChangeEnabled'] as bool,
-      priceDropEnabled: json['priceDropEnabled'] as bool,
-      tripGuardianEnabled: json['tripGuardianEnabled'] as bool,
+      gateChangeEnabled: json['gateChangeEnabled'] as bool? ?? false,
+      priceDropEnabled: json['priceDropEnabled'] as bool? ?? false,
+      tripGuardianEnabled: json['tripGuardianEnabled'] as bool? ?? false,
     );
   }
 
