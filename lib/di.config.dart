@@ -15,6 +15,8 @@ import 'package:flight_booking_app/app/cubit/app_info/app_info_cubit.dart'
     as _i187;
 import 'package:flight_booking_app/app/cubit/app_locale_cubit.dart' as _i533;
 import 'package:flight_booking_app/app/cubit/app_theme_cubit.dart' as _i850;
+import 'package:flight_booking_app/app/cubit/push_notifications/push_notifications_cubit.dart'
+    as _i283;
 import 'package:flight_booking_app/app/router/app_router.dart' as _i716;
 import 'package:flight_booking_app/app/router/guards/auth_guard.dart' as _i859;
 import 'package:flight_booking_app/di/app_module.dart' as _i1035;
@@ -52,6 +54,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i850.AppThemeCubit>(() => _i850.AppThemeCubit());
     gh.singleton<_i187.AppInfoCubit>(() => _i187.AppInfoCubit());
     gh.singleton<_i533.AppLocaleCubit>(() => _i533.AppLocaleCubit());
+    gh.singleton<_i283.PushNotificationsCubit>(
+        () => _i283.PushNotificationsCubit());
     gh.singleton<_i204.AuthRemoteDataSource>(
         () => _i204.AuthRemoteDataSource());
     gh.singleton<_i927.ToastrCubit>(() => _i927.ToastrCubit());

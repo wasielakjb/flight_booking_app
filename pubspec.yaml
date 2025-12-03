@@ -36,6 +36,9 @@ dependencies:
   dotted_border: ^2.1.0
   flutter_svg: ^2.2.0
   upgrader: ^12.3.0
+  flutter_local_notifications: ^19.5.0
+  hydrated_bloc: ^10.1.1
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

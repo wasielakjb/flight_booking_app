@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flight_booking_app/app/cubit/app_info/app_info_cubit.dart';
 import 'package:flight_booking_app/app/cubit/app_locale_cubit.dart';
 import 'package:flight_booking_app/app/cubit/app_theme_cubit.dart';
+import 'package:flight_booking_app/app/cubit/push_notifications/push_notifications_cubit.dart';
 import 'package:flight_booking_app/app/router/app_router.dart';
 import 'package:flight_booking_app/di.dart';
 import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
@@ -24,6 +25,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (_) => inject<AppInfoCubit>()),
         BlocProvider(create: (_) => inject<AppLocaleCubit>()),
         BlocProvider(create: (_) => inject<AppThemeCubit>()),
+        BlocProvider(create: (_) => inject<PushNotificationsCubit>()),
         BlocProvider(create: (_) => inject<AuthCubit>()),
       ],
       child: BlocBuilder<AppThemeCubit, ThemeMode>(
