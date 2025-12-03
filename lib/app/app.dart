@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flight_booking_app/app/cubit/app_info/app_info_cubit.dart';
 import 'package:flight_booking_app/app/cubit/app_locale_cubit.dart';
 import 'package:flight_booking_app/app/cubit/app_theme_cubit.dart';
 import 'package:flight_booking_app/app/router/app_router.dart';
@@ -20,6 +21,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => inject<AppInfoCubit>()),
         BlocProvider(create: (_) => inject<AppLocaleCubit>()),
         BlocProvider(create: (_) => inject<AppThemeCubit>()),
         BlocProvider(create: (_) => inject<AuthCubit>()),

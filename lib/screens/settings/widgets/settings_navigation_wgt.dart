@@ -11,8 +11,11 @@ class SettingsNavigationWidget extends StatelessWidget {
     this.showAction = true,
     this.route,
     this.onTap,
+    this.padding,
+    this.backgroundIconColor,
+    this.foregroundIconColor,
     this.backgroundColor,
-    this.foregroundColor,
+    this.borderRadius,
     super.key,
   });
 
@@ -21,42 +24,50 @@ class SettingsNavigationWidget extends StatelessWidget {
   final bool showAction;
   final PageRouteInfo<dynamic>? route;
   final VoidCallback? onTap;
+  final EdgeInsetsGeometry? padding;
+  final Color? backgroundIconColor;
+  final Color? foregroundIconColor;
   final Color? backgroundColor;
-  final Color? foregroundColor;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: route != null || onTap != null
-          ? () {
-              if (route != null) {
-                context.pushRoute(route!);
-              } else {
-                onTap!.call();
+    return Material(
+      color: backgroundColor,
+      borderRadius: borderRadius,
+      child: InkWell(
+        onTap: route != null || onTap != null
+            ? () {
+                if (route != null) {
+                  context.pushRoute(route!);
+                } else {
+                  onTap!.call();
+                }
               }
-            }
-          : null,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-        child: Row(
-          spacing: 12,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(99),
-                color: backgroundColor ?? context.surfaceContainerHighest,
+            : null,
+        borderRadius: borderRadius,
+        child: Padding(
+          padding: padding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+          child: Row(
+            spacing: 12,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(99),
+                  color: backgroundColor ?? context.surfaceContainerHighest,
+                ),
+                child: Icon(
+                  icon,
+                  size: 20,
+                  color: foregroundIconColor ?? context.onSurface.withValues(alpha: 0.6),
+                ),
               ),
-              child: Icon(
-                icon,
-                size: 20,
-                color: foregroundColor ?? context.onSurface.withValues(alpha: 0.6),
-              ),
-            ),
-            Text(title, style: context.bodyLarge.copyWith(color: foregroundColor)),
-            const Spacer(),
-            if (showAction) const Icon(Iconsax.arrow_right_3_outline, size: 18),
-          ],
+              Text(title, style: context.bodyLarge.copyWith(color: foregroundIconColor)),
+              const Spacer(),
+              if (showAction) const Icon(Iconsax.arrow_right_3_outline, size: 18),
+            ],
+          ),
         ),
       ),
     );

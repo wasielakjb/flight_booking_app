@@ -11,6 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:firebase_core/firebase_core.dart' as _i982;
+import 'package:flight_booking_app/app/cubit/app_info/app_info_cubit.dart'
+    as _i187;
 import 'package:flight_booking_app/app/cubit/app_locale_cubit.dart' as _i533;
 import 'package:flight_booking_app/app/cubit/app_theme_cubit.dart' as _i850;
 import 'package:flight_booking_app/app/router/app_router.dart' as _i716;
@@ -48,6 +50,7 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.singleton<_i850.AppThemeCubit>(() => _i850.AppThemeCubit());
+    gh.singleton<_i187.AppInfoCubit>(() => _i187.AppInfoCubit());
     gh.singleton<_i533.AppLocaleCubit>(() => _i533.AppLocaleCubit());
     gh.singleton<_i204.AuthRemoteDataSource>(
         () => _i204.AuthRemoteDataSource());
