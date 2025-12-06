@@ -8,7 +8,7 @@ import 'package:flight_booking_app/templates/bottom_sheet_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-class FormPassengersField extends StatelessWidget {
+class FormPassengersField extends StatefulWidget {
   FormPassengersField({
     required this.name,
     this.initialValue,
@@ -23,15 +23,22 @@ class FormPassengersField extends StatelessWidget {
   final String? placeholder;
   final String? Function(Map<PassengersType, int>?)? validator;
 
+  @override
+  State<FormPassengersField> createState() => _FormPassengersFieldState();
+}
+
+class _FormPassengersFieldState extends State<FormPassengersField> {
+  bool isFocused = false;
+
   Widget? get prefixIconBuilder {
-    if (prefixIcon == null) return null;
+    if (widget.prefixIcon == null) return null;
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: IntrinsicHeight(
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(prefixIcon, size: 20),
+            Icon(widget.prefixIcon, size: 20),
             const VerticalDivider(),
           ],
         ),
@@ -42,24 +49,27 @@ class FormPassengersField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderField<Map<PassengersType, int>>(
-      name: name,
-      initialValue: initialValue,
-      validator: validator,
+      name: widget.name,
+      initialValue: widget.initialValue,
+      validator: widget.validator,
       builder: (field) => InkWell(
         onTap: () async {
+          setState(() => isFocused = true);
           final res = await PassengersSelectorBottom.show(
             context,
             value: field.value,
           );
+          setState(() => isFocused = false);
           final total = res?.values.fold(0, (sum, value) => sum + value) ?? 0;
           field.didChange(total == 0 ? null : res);
         },
         child: InputDecorator(
           isEmpty: field.value == null,
+          isFocused: isFocused,
           decoration: InputDecoration(
             errorText: field.errorText,
             errorMaxLines: 2,
-            hintText: placeholder,
+            hintText: widget.placeholder,
             hintMaxLines: 1,
             prefixIcon: prefixIconBuilder,
             prefixIconConstraints: const BoxConstraints.tightFor(),
