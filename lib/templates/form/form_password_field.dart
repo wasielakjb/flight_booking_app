@@ -5,14 +5,14 @@ class FormPasswordField extends StatefulWidget {
   FormPasswordField({
     required this.name,
     this.initialValue,
-    this.label,
+    this.prefixIcon,
     this.placeholder,
     this.validator,
   }) : super(key: ValueKey(name));
 
   final String name;
   final String? initialValue;
-  final String? label;
+  final IconData? prefixIcon;
   final String? placeholder;
   final String? Function(String?)? validator;
 
@@ -28,7 +28,7 @@ class _FormPasswordFieldState extends State<FormPasswordField> {
     return FormTextField(
       name: widget.name,
       initialValue: widget.initialValue,
-      label: widget.label,
+      prefixIcon: widget.prefixIcon,
       placeholder: widget.placeholder,
       obscureText: obscureText,
       keyboardType: TextInputType.visiblePassword,

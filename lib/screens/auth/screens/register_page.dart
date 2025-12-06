@@ -67,32 +67,32 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       FormTextField(
                         name: 'full_name',
-                        label: 'Full name',
                         placeholder: 'Enter your full name',
+                        prefixIcon: Icons.person_outline,
                         validator: FormBuilderValidators.required(),
                       ),
                       FormTextField(
                         name: 'email',
-                        label: 'Email',
                         placeholder: 'Enter your email',
+                        prefixIcon: Icons.email_outlined,
                         validator: FormBuilderValidators.email(),
                       ),
                       FormDateTimeField(
                         name: 'birth_of_date',
-                        label: 'Birth of date',
                         placeholder: 'Select your birth of date',
+                        prefixIcon: Icons.date_range_outlined,
                         validator: FormBuilderValidators.dateTime(),
                       ),
                       FormPhoneNumberField(
                         name: 'phone_numer',
-                        label: 'Phone Number',
                         placeholder: 'Enter your phone number',
+                        prefixIcon: Icons.phone_outlined,
                         validator: FormBuilderValidators.phoneNumber(),
                       ),
                       FormPasswordField(
                         name: 'password',
-                        label: 'Password',
                         placeholder: 'Set your Password',
+                        prefixIcon: Icons.lock_outline,
                         validator: FormBuilderValidators.required(),
                       ),
                     ],

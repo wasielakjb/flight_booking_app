@@ -67,14 +67,14 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       FormTextField(
                         name: 'email',
-                        label: 'Email',
                         placeholder: 'Enter your email',
+                        prefixIcon: Icons.email_outlined,
                         validator: FormBuilderValidators.email(),
                       ),
                       FormPasswordField(
                         name: 'password',
-                        label: 'Password',
                         placeholder: 'Enter your Password',
+                        prefixIcon: Icons.lock_outline,
                         validator: FormBuilderValidators.required(),
                       ),
                       GestureDetector(

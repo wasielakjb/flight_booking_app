@@ -1,13 +1,13 @@
 enum TravelClass {
+  first,
   economy,
-  economyPremium,
   business,
-  first;
+  premiumEconomy;
 
   String resolveName() => switch (this) {
-        economy => 'Economy',
-        economyPremium => 'Economy Premium',
-        business => 'Business',
-        first => 'First',
+        first => 'First Class',
+        economy => 'Economy Class',
+        business => 'Business Class',
+        premiumEconomy => 'Premium Economy',
       };
 }

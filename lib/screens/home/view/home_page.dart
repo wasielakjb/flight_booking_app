@@ -1,151 +1,61 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flight_booking_app/app/router/app_router.gr.dart';
+import 'package:flight_booking_app/di.dart';
+import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
+import 'package:flight_booking_app/extensions/text_theme_extension.dart';
+import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
+import 'package:flight_booking_app/features/users/cubit/user_cubit.dart';
+import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';
+import 'package:flight_booking_app/screens/home/widgets/home_user_header_wgt.dart';
+import 'package:flight_booking_app/screens/home/widgets/search_form/home_search_form.dart';
 import 'package:flight_booking_app/templates/app_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class HomePage extends StatelessWidget {
+class HomePage extends StatelessWidget implements AutoRouteWrapper {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      bottomNavigationBar: AppNavigationBar(activeRoute: HomeRoute()),
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (context) => UserCubit(
+        repository: inject<UserRepository>(),
+        id: context.read<AuthCubit>().userId!,
+      ),
+      lazy: false,
+      child: this,
     );
+  }
 
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     centerTitle: false,
-    //     title: Row(
-    //       spacing: 12,
-    //       children: [
-    //         CircleAvatar(backgroundColor: context.primary),
-    //         Column(
-    //           crossAxisAlignment: CrossAxisAlignment.start,
-    //           children: [
-    //             Text('Good morning! 🌤️', style: context.bodyMedium),
-    //             Text('Esther Howard', style: context.titleMedium),
-    //           ],
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    //   body: Padding(
-    //     padding: const EdgeInsets.all(16),
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         Container(
-    //           padding: const EdgeInsets.all(16),
-    //           decoration: BoxDecoration(
-    //             borderRadius: BorderRadius.circular(24),
-    //             color: context.surface,
-    //             boxShadow: [
-    //               BoxShadow(
-    //                 color: context.onSurface.withValues(alpha: 0.1),
-    //                 spreadRadius: 1,
-    //                 blurRadius: 8,
-    //                 offset: const Offset(0, 2),
-    //               ),
-    //             ],
-    //           ),
-    //           child: FormBuilder(
-    //             child: Column(
-    //               spacing: 18,
-    //               children: [
-    //                 const FormTripTypeField(name: 'trip_type'),
-    //                 const FormAirportLocationField(
-    //                   name: 'departure_airport',
-    //                   labelText: 'Departure airport',
-    //                   hintText: 'Enter city or airport code',
-    //                   icon: Icons.location_on_outlined,
-    //                 ),
-    //                 const FormAirportLocationField(
-    //                   name: 'arrival_airport',
-    //                   labelText: 'Arrival airport',
-    //                   hintText: 'Enter city or airport code',
-    //                   icon: Icons.location_on_outlined,
-    //                 ),
-    //                 const FormDepartureDateField(
-    //                   name: 'departure_date',
-    //                   labelText: 'Departure date',
-    //                   hintText: 'Choose your departure date',
-    //                   icon: Icons.date_range_outlined,
-    //                 ),
-    //                 const Row(
-    //                   spacing: 18,
-    //                   children: [
-    //                     Expanded(
-    //                       child: FormTravelClassField(
-    //                         name: 'travel_class',
-    //                         labelText: 'Travel class',
-    //                         hintText: 'Choose class',
-    //                         icon: Icons.work_outline,
-    //                       ),
-    //                     ),
-    //                     Expanded(
-    //                       child: FormPassangersField(
-    //                         name: 'passengers',
-    //                         labelText: 'Passenger',
-    //                         hintText: 'Select number of passengers',
-    //                         icon: Icons.group_outlined,
-    //                       ),
-    //                     ),
-    //                   ],
-    //                 ),
-    //                 FilledButton(
-    //                   style: FilledButton.styleFrom(
-    //                     minimumSize: const Size.fromHeight(50),
-    //                   ),
-    //                   onPressed: () {},
-    //                   child: Text(
-    //                     'Search',
-    //                     style: context.titleMedium
-    //                         .copyWith(color: context.surface),
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //         ),
-    //         const SizedBox(height: 32),
-    //         Text('Recent Search', style: context.titleMedium),
-    //         Expanded(
-    //           child: ListView.separated(
-    //             padding: const EdgeInsets.only(top: 18),
-    //             scrollDirection: Axis.horizontal,
-    //             itemCount: 20,
-    //             itemBuilder: (context, index) => Container(
-    //               child: Text('data'),
-    //             ),
-    //             separatorBuilder: (_, __) => const SizedBox(width: 10),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    //   bottomNavigationBar: NavigationBar(
-    //     destinations: const [
-    //       NavigationDestination(
-    //         label: 'Home',
-    //         icon: Icon(Symbols.home),
-    //         selectedIcon: Icon(Icons.home_filled),
-    //       ),
-    //       NavigationDestination(
-    //         label: 'Ticket',
-    //         icon: Icon(Icons.airplane_ticket_outlined),
-    //       ),
-    //       NavigationDestination(
-    //         label: 'History',
-    //         icon: Icon(Icons.history_outlined),
-    //       ),
-    //       NavigationDestination(
-    //         label: 'Settings',
-    //         icon: Icon(Icons.settings_outlined),
-    //       ),
-    //     ],
-    //   ),
-    // ); 
-  
+  @override
+  Widget build(BuildContext context) {
+    final userCubit = context.watch<UserCubit>();
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height / 2.2,
+            color: context.primary,
+          ),
+          SafeArea(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              children: [
+                HomeUserHeaderWidget(resource: userCubit.state.current),
+                const SizedBox(height: 28),
+                Text(
+                  'Let’s Book your  next trip',
+                  style: context.displayLarge.copyWith(color: context.surface),
+                ),
+                const SizedBox(height: 28),
+                const HomeSearchForm(),        
+              ],
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: const AppNavigationBar(activeRoute: HomeRoute()),
+    );
   }
 }

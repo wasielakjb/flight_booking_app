@@ -57,8 +57,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   const SizedBox(height: 32),
                   FormTextField(
                     name: 'email',
-                    label: 'Email',
                     placeholder: 'Enter your email',
+                    prefixIcon: Icons.email_outlined,
                     validator: FormBuilderValidators.email(),
                   ),
                   const SizedBox(height: 32),

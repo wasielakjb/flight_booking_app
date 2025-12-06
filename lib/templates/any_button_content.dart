@@ -1,4 +1,5 @@
 import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
+import 'package:flight_booking_app/extensions/text_theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class AnyButtonContent extends StatelessWidget {
@@ -67,7 +68,11 @@ class AnyButtonContent extends StatelessWidget {
                 icon!,
                 const SizedBox(width: 10),
               ],
-              if (text != null) Text(text!),
+              if (text != null)
+                Text(
+                  text!,
+                  style: context.titleMedium.copyWith(color: context.surface),
+                ),
               if (icon != null && iconRight) ...[
                 const SizedBox(width: 6),
                 icon!,

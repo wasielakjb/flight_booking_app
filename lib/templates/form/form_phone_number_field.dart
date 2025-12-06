@@ -10,7 +10,7 @@ class FormPhoneNumberField extends StatelessWidget {
   FormPhoneNumberField({
     required this.name,
     this.initialValue,
-    this.label,
+    this.prefixIcon,
     this.placeholder,
     this.allowCountryCodeChange = true,
     this.validator,
@@ -18,7 +18,7 @@ class FormPhoneNumberField extends StatelessWidget {
 
   final String name;
   final String? initialValue;
-  final String? label;
+  final IconData? prefixIcon;
   final String? placeholder;
   final bool allowCountryCodeChange;
   final String? Function(String?)? validator;
@@ -33,30 +33,18 @@ class FormPhoneNumberField extends StatelessWidget {
           color: context.surfaceContainer,
         ),
       ),
-      child: Column(
-        spacing: 4,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (label != null)
-            Text(
-              label!,
-              style: context.bodySmall.copyWith(
-                color: context.onSurface.withValues(alpha: 0.8),
-              ),
-            ),
-          FormBuilderField<String>(
-            name: name,
-            validator: validator,
-            initialValue: initialValue,
-            builder: (field) => PhoneNumberField(
-              initialValue: field.value,
-              onChanged: field.didChange,
-              allowCountryCodeChange: allowCountryCodeChange,
-              placeholder: placeholder,
-              errorText: field.errorText,
-            ),
-          ),
-        ],
+      child: FormBuilderField<String>(
+        name: name,
+        validator: validator,
+        initialValue: initialValue,
+        builder: (field) => PhoneNumberField(
+          initialValue: field.value,
+          onChanged: field.didChange,
+          allowCountryCodeChange: allowCountryCodeChange,
+          placeholder: placeholder,
+          prefixIcon: prefixIcon,
+          errorText: field.errorText,
+        ),
       ),
     );
   }
@@ -69,6 +57,7 @@ class PhoneNumberField extends StatefulWidget {
     this.onSubmitted,
     this.allowCountryCodeChange = true,
     this.placeholder,
+    this.prefixIcon,
     this.errorText,
     super.key,
   });
@@ -78,6 +67,7 @@ class PhoneNumberField extends StatefulWidget {
   final void Function()? onSubmitted;
   final bool allowCountryCodeChange;
   final String? placeholder;
+  final IconData? prefixIcon;
   final String? errorText;
 
   @override
@@ -120,12 +110,15 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
       decoration: InputDecoration(errorText: widget.errorText),
       child: IntrinsicHeight(
         child: Row(
-          spacing: 8,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Icon(widget.prefixIcon, size: 20),
+            const SizedBox(width: 8),
+            const VerticalDivider(),
+            const SizedBox(width: 8),
             TextButton(
               style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
+                padding: const EdgeInsets.symmetric(horizontal: 2),
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 minimumSize: Size.zero,
               ),
@@ -140,7 +133,6 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
                 }
               },
               child: Row(
-                spacing: 4,
                 children: [
                   Text('+${countryCode.phoneCode}', style: context.bodyLarge),
                   Icon(
@@ -151,7 +143,7 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
                 ],
               ),
             ),
-            const VerticalDivider(thickness: 1, width: 1),
+            const SizedBox(width: 4),
             Expanded(
               child: TextField(
                 controller: _controller,

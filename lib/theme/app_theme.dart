@@ -32,8 +32,6 @@ class AppTheme {
       ),
       labelStyle: lightTextTheme.bodyLarge,
       contentPadding: const EdgeInsets.symmetric(vertical: 12.5, horizontal: 14),
-      // filled: true,
-      // fillColor: lightColorScheme.surfaceContainer,
     ),
     searchBarTheme: SearchBarThemeData(
       elevation: const WidgetStatePropertyAll(0),
