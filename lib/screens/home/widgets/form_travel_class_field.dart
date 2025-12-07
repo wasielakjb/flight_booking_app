@@ -75,7 +75,12 @@ class FormTravelClassField extends StatelessWidget {
                 prefixIcon: prefixIconBuilder,
                 prefixIconConstraints: const BoxConstraints.tightFor(),
               ),
-              child: field.value?.let((value) => Text(value.resolveName())),
+              child: field.value?.let(
+                (value) => Text(
+                  value.resolveName(),
+                  style: context.bodyLarge,
+                ),
+              ),
             ),
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.zero,

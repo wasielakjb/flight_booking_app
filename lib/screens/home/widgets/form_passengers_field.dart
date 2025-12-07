@@ -85,7 +85,7 @@ class _FormPassengersFieldState extends State<FormPassengersField> {
             ),
             child: field.value.let((value) {
               final total = value.values.fold(0, (sum, value) => sum + value);
-              return Text('$total Seat');
+              return Text('$total Seat', style: context.bodyLarge);
             }),
           ),
         ),
