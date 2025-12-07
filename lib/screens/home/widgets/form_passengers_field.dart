@@ -7,6 +7,7 @@ import 'package:flight_booking_app/templates/any_button_content.dart';
 import 'package:flight_booking_app/templates/bottom_sheet_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class FormPassengersField extends StatefulWidget {
   FormPassengersField({
@@ -48,36 +49,45 @@ class _FormPassengersFieldState extends State<FormPassengersField> {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilderField<Map<PassengersType, int>>(
-      name: widget.name,
-      initialValue: widget.initialValue,
-      validator: widget.validator,
-      builder: (field) => InkWell(
-        onTap: () async {
-          setState(() => isFocused = true);
-          final res = await PassengersSelectorBottom.show(
-            context,
-            value: field.value,
-          );
-          setState(() => isFocused = false);
-          final total = res?.values.fold(0, (sum, value) => sum + value) ?? 0;
-          field.didChange(total == 0 ? null : res);
-        },
-        child: InputDecorator(
-          isEmpty: field.value == null,
-          isFocused: isFocused,
-          decoration: InputDecoration(
-            errorText: field.errorText,
-            errorMaxLines: 2,
-            hintText: widget.placeholder,
-            hintMaxLines: 1,
-            prefixIcon: prefixIconBuilder,
-            prefixIconConstraints: const BoxConstraints.tightFor(),
+    return Skeleton.replace(
+      replacement: Container(
+        height: 46,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: context.surfaceContainer,
+        ),
+      ),
+      child: FormBuilderField<Map<PassengersType, int>>(
+        name: widget.name,
+        initialValue: widget.initialValue,
+        validator: widget.validator,
+        builder: (field) => InkWell(
+          onTap: () async {
+            setState(() => isFocused = true);
+            final res = await PassengersSelectorBottom.show(
+              context,
+              value: field.value,
+            );
+            setState(() => isFocused = false);
+            final total = res?.values.fold(0, (sum, value) => sum + value) ?? 0;
+            field.didChange(total == 0 ? null : res);
+          },
+          child: InputDecorator(
+            isEmpty: field.value == null,
+            isFocused: isFocused,
+            decoration: InputDecoration(
+              errorText: field.errorText,
+              errorMaxLines: 2,
+              hintText: widget.placeholder,
+              hintMaxLines: 1,
+              prefixIcon: prefixIconBuilder,
+              prefixIconConstraints: const BoxConstraints.tightFor(),
+            ),
+            child: field.value.let((value) {
+              final total = value.values.fold(0, (sum, value) => sum + value);
+              return Text('$total Seat');
+            }),
           ),
-          child: field.value.let((value) {
-            final total = value.values.fold(0, (sum, value) => sum + value);
-            return Text('$total Seat');
-          }),
         ),
       ),
     );
