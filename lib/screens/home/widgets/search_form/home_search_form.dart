@@ -1,9 +1,9 @@
 import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
+import 'package:flight_booking_app/screens/home/widgets/form_airport_field.dart';
 import 'package:flight_booking_app/screens/home/widgets/form_passengers_field.dart';
 import 'package:flight_booking_app/screens/home/widgets/form_travel_class_field.dart';
 import 'package:flight_booking_app/templates/any_button_content.dart';
 import 'package:flight_booking_app/templates/form/form_date_time_field.dart';
-import 'package:flight_booking_app/templates/form/form_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -32,12 +32,12 @@ class HomeSearchForm extends StatelessWidget {
           spacing: 18,
           mainAxisSize: MainAxisSize.min,
           children: [
-            FormTextField(
+            FormAirportField(
               name: 'origin',
               prefixIcon: Icons.flight_takeoff,
               placeholder: 'Enter a city or airport.',
             ),
-            FormTextField(
+            FormAirportField(
               name: 'destination',
               prefixIcon: Icons.flight_land,
               placeholder: 'Enter a city or airport.',
