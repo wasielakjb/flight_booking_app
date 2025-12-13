@@ -113,7 +113,7 @@ class HomeRoute extends _i15.PageRouteInfo<void> {
   static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
-      return const _i5.HomePage();
+      return _i15.WrappedRoute(child: const _i5.HomePage());
     },
   );
 }
