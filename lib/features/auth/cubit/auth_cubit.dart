@@ -19,7 +19,9 @@ class AuthCubit extends Cubit<AuthState> with SafeEmit {
     required this.authRepository,
     required this.userRepository,
   }) : super(const AuthState()) {
-    _initialize();
+    authRepository.stream.listen((token) {
+      emit(state.copyWith(isAuthenticated: token != null));
+    });
   }
 
   @protected
@@ -28,19 +30,20 @@ class AuthCubit extends Cubit<AuthState> with SafeEmit {
   @protected
   final UserRepository userRepository;
 
-  String? get userId => authRepository.userId;
-
-  Future<void> _initialize() async {
-    if (authRepository.isAuthenticated) {
-      await userRepository.get(authRepository.userId!);
-      emitSafely(state.copyWith(status: AuthStatus.authenticated));
-    }
-  }
+  // Future<void> _initialize() async {
+  //   if (authRepository.isAuthenticated) {
+  //     await userRepository.get(authRepository.userId!);
+  //     emitSafely(state.copyWith(status: AuthStatus.authenticated));
+  //   }
+  // }
 
   Future<void> login(LoginCredentials credentials) async {
     try {
       emitSafely(state.copyWith(status: AuthStatus.loading));
-      final id = await authRepository.login(credentials);
+      final id = await authRepository.login(
+        email: credentials.email,
+        password: credentials.password,
+      );
       await userRepository.get(id);
       emitSafely(state.copyWith(status: AuthStatus.authenticated));
     } on FirebaseAuthException catch (e) {
@@ -51,7 +54,10 @@ class AuthCubit extends Cubit<AuthState> with SafeEmit {
   Future<void> register(RegisterCredentials data) async {
     try {
       emitSafely(state.copyWith(status: AuthStatus.loading));
-      final id = await authRepository.register(data);
+      final id = await authRepository.register(
+        email: data.email,
+        password: data.password,
+      );
       await userRepository.create(id, data);
       emitSafely(state.copyWith(status: AuthStatus.authenticated));
     } on FirebaseAuthException catch (e) {
@@ -62,7 +68,7 @@ class AuthCubit extends Cubit<AuthState> with SafeEmit {
   Future<void> resetPassword(String email) async {
     try {
       emitSafely(state.copyWith(status: AuthStatus.loading));
-      await authRepository.resetPassword(email);
+      await authRepository.resetPassword(email: email);
       emitSafely(state.copyWith(status: AuthStatus.initial));
     } on FirebaseAuthException catch (e) {
       emitSafely(state.copyWith(status: AuthStatus.error, errorMsg: e.message));

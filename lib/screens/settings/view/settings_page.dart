@@ -22,7 +22,6 @@ class SettingsPage extends StatelessWidget implements AutoRouteWrapper {
     return BlocProvider(
       create: (context) => UserCubit(
         repository: inject<UserRepository>(),
-        id: context.read<AuthCubit>().userId!,
       ),
       lazy: false,
       child: this,

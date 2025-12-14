@@ -3,7 +3,6 @@ import 'package:flight_booking_app/app/router/app_router.gr.dart';
 import 'package:flight_booking_app/di.dart';
 import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
 import 'package:flight_booking_app/extensions/text_theme_extension.dart';
-import 'package:flight_booking_app/features/auth/cubit/auth_cubit.dart';
 import 'package:flight_booking_app/features/users/cubit/user_cubit.dart';
 import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';
 import 'package:flight_booking_app/screens/home/widgets/home_user_header_wgt.dart';
@@ -21,7 +20,6 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
     return BlocProvider(
       create: (context) => UserCubit(
         repository: inject<UserRepository>(),
-        id: context.read<AuthCubit>().userId!,
       ),
       lazy: false,
       child: this,

@@ -12,19 +12,18 @@ part 'user_state.dart';
 class UserCubit extends Cubit<UserState> {
   UserCubit({
     required this.repository,
-    required String id,
   }) : super(const UserState()) {
-    _initialize(id);
+    // _initialize(id);
   }
 
   @protected
   final UserRepository repository;
   
-  Future<void> _initialize(String id) async {
-    emit(state.copyWith(status: ResourceStatus.loading));
-    final user = await repository.get(id);
-    emit(state.copyWith(status: ResourceStatus.success, current: user));
-  }
+  // Future<void> _initialize(String id) async {
+  //   emit(state.copyWith(status: ResourceStatus.loading));
+  //   final user = await repository.get(id);
+  //   emit(state.copyWith(status: ResourceStatus.success, current: user));
+  // }
 
   Future<void> update(UserRequest request) async {
     try {

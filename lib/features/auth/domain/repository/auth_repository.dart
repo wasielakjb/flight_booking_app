@@ -1,37 +1,19 @@
-import 'package:flight_booking_app/features/auth/data/data_sources/auth_remote_ds.dart';
-import 'package:flight_booking_app/features/auth/domain/models/login_credentials.dart';
-import 'package:flight_booking_app/features/auth/domain/models/register_credentials.dart';
-import 'package:flutter/foundation.dart';
-import 'package:injectable/injectable.dart';
+import 'package:flight_booking_app/features/auth/domain/models/access_token.dart';
 
-@singleton
-class AuthRepository {
-  AuthRepository({required this.remoteDS});
+abstract interface class AuthRepository {
+  Stream<AccessToken?> get stream;
 
-  @protected
-  final AuthRemoteDataSource remoteDS;
+  Stream<String?> get userStream;
 
-  String? get userId => remoteDS.user?.uid;
+  bool get isAuthenticated;
 
-  bool get isAuthenticated => remoteDS.user != null;
+  Future<AccessToken> getValidToken();
 
-  Stream<String?> get stream => remoteDS.stream
-      .map((user) => user?.uid)
-      .distinct((prev, next) => prev == next);
+  Future<String> login({required String email, required String password});
 
-  Future<String> login(LoginCredentials payload) async {
-    return remoteDS.login(payload.email, payload.password);
-  }
+  Future<void> logout();
+  
+  Future<String> register({required String email, required String password});
 
-  Future<String> register(RegisterCredentials payload) async {
-    return remoteDS.register(payload.email, payload.password);
-  }
-
-  Future<void> resetPassword(String email) async {
-    return remoteDS.resetPassword(email);
-  }
-
-  Future<void> logout() async {
-    await remoteDS.logout();
-  }
+  Future<void> resetPassword({required String email});
 }

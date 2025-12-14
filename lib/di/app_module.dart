@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flight_booking_app/firebase_options.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 @module
@@ -12,4 +13,7 @@ abstract class AppModule {
 
   @lazySingleton
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
+
+  @singleton
+  Storage get storage => HydratedBloc.storage;
 }
