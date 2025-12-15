@@ -67,6 +67,11 @@ class AppTheme {
         foregroundColor: WidgetStatePropertyAll(lightColorScheme.onSurface),
       ),
     ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+      ),
+    ),
     extensions: [
       AppCustomColors.light,
       lightSkeletonizerConfig,
@@ -116,6 +121,11 @@ class AppTheme {
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
         minimumSize: const WidgetStatePropertyAll(Size(150, 48)),
+      ),
+    ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
     ),
     extensions: [

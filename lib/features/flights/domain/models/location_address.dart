@@ -14,7 +14,7 @@ class LocationAddress extends Equatable {
   final String cityCode;
   final String countryName;
   final String countryCode;
-  final String stateCode;
+  final String? stateCode;
   final String regionCode;
 
   @override

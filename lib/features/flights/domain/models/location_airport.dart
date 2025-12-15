@@ -1,7 +1,8 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 import 'package:flight_booking_app/features/flights/domain/enums/location_type.dart';
 import 'package:flight_booking_app/features/flights/domain/models/location_address.dart';
-import 'package:geojson_vi/geojson_vi.dart';
 
 class LocationAirport extends Equatable {
   const LocationAirport({
@@ -19,7 +20,7 @@ class LocationAirport extends Equatable {
   final String name;
   final String detailedName;
   final String iataCode;
-  final GeoJSONPoint geoCode;
+  final Point geoCode;
   final LocationAddress address;
 
   @override

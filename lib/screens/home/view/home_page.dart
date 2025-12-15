@@ -25,7 +25,6 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
       child: this,
     );
   }
-
   @override
   Widget build(BuildContext context) {
     final userCubit = context.watch<UserCubit>();
