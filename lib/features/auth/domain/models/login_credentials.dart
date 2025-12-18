@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flight_booking_app/extensions/json.dart';
+import 'package:flight_booking_app/core/models/json.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'login_credentials.g.dart';

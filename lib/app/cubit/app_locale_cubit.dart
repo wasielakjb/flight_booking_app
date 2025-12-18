@@ -1,4 +1,4 @@
-import 'package:flight_booking_app/extensions/json.dart';
+import 'package:flight_booking_app/core/models/json.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';

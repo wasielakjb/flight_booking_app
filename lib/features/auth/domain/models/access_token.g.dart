@@ -10,6 +10,7 @@ AccessToken _$AccessTokenFromJson(Map<String, dynamic> json) => AccessToken(
       tokenType: json['token_type'] as String,
       accessToken: json['access_token'] as String,
       expiresIn: (json['expires_in'] as num).toInt(),
+      generatedAt: DateTime.parse(json['generated_at'] as String),
     );
 
 Map<String, dynamic> _$AccessTokenToJson(AccessToken instance) =>
@@ -17,4 +18,5 @@ Map<String, dynamic> _$AccessTokenToJson(AccessToken instance) =>
       'token_type': instance.tokenType,
       'access_token': instance.accessToken,
       'expires_in': instance.expiresIn,
+      'generated_at': instance.generatedAt.toIso8601String(),
     };

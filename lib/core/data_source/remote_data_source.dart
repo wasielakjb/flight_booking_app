@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flight_booking_app/extensions/json.dart';
+import 'package:flight_booking_app/core/models/json.dart';
 
 abstract class RemoteDataSource<T extends Object> {
   FirebaseFirestore get firestore;

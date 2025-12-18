@@ -13,9 +13,9 @@ class FlightsRepositoryImpl implements FlightsRepository {
   final FlightsRemoteDataSource remoteDS;
 
   @override
-  Future<List<LocationAirport>> searchAirportAndCity(String value) {
+  Future<List<LocationAirport>> searchAirportsByQuery(String query) {
     return remoteDS
-        .searchAirportAndCity(value)
+        .searchAirportsByQuery(query)
         .then((res) => res.data.map((e) => e.asEntity()).toList());
   }
 }

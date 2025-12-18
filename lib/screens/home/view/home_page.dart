@@ -5,8 +5,8 @@ import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
 import 'package:flight_booking_app/extensions/text_theme_extension.dart';
 import 'package:flight_booking_app/features/users/cubit/user_cubit.dart';
 import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';
+import 'package:flight_booking_app/screens/home/form/view/flight_offert_form_wgt.dart';
 import 'package:flight_booking_app/screens/home/widgets/home_user_header_wgt.dart';
-import 'package:flight_booking_app/screens/home/widgets/search_form/home_search_form.dart';
 import 'package:flight_booking_app/templates/app_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +46,23 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
                   style: context.displayLarge.copyWith(color: context.surface),
                 ),
                 const SizedBox(height: 28),
-                const HomeSearchForm(),        
+                Container(
+                  padding: const EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    color: context.surface,
+                    boxShadow: [
+                      BoxShadow(
+                        color: context.onSurface.withValues(alpha: 0.1),
+                        offset: const Offset(0, 2),
+                        spreadRadius: 4,
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                  child: const FlightOffertFormWidget(),
+                ),
+                // const HomeSearchForm(),        
               ],
             ),
           ),

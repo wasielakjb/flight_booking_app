@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flight_booking_app/core/remote_data_source.dart';
-import 'package:flight_booking_app/extensions/json.dart';
+import 'package:flight_booking_app/core/data_source/remote_data_source.dart';
+import 'package:flight_booking_app/core/models/json.dart';
 import 'package:flight_booking_app/features/users/data/network/network_user.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';

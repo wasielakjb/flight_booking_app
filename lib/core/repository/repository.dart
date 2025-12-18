@@ -1,5 +1,5 @@
-import 'package:flight_booking_app/core/form_request.dart';
-import 'package:flight_booking_app/core/remote_data_source.dart';
+import 'package:flight_booking_app/core/data_source/remote_data_source.dart';
+import 'package:flight_booking_app/core/request/form_request.dart';
 
 abstract class Repository<T extends Object> {
   RemoteDataSource get remoteDS;

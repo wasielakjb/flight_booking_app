@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flight_booking_app/core/index_response.dart';
-import 'package:flight_booking_app/extensions/json.dart';
+import 'package:flight_booking_app/core/models/json.dart';
+import 'package:flight_booking_app/core/network/index_response.dart';
 import 'package:flight_booking_app/features/flights/data/models/network_location_airport.dart';
 import 'package:flight_booking_app/http/di/di.dart';
 import 'package:flutter/material.dart';
@@ -15,20 +15,17 @@ class FlightsRemoteDataSource {
   @protected
   final Dio httpClient;
 
-  Future<IndexResponse<NetworkLocationAirport>> searchAirportAndCity(
-    String value,
+  Future<IndexResponse<NetworkLocationAirport>> searchAirportsByQuery(
+    String query,
   ) async {
-    return httpClient.get<Json>(
-      '/reference-data/locations',
-      queryParameters: {
-        'keyword': value,
-        'subType': 'CITY',
-      },
-    ).then(
-      (res) => IndexResponse.fromJson(
-        res.data!,
-        mapper: NetworkLocationAirport.fromJson,
-      ),
-    );
+    final parameters = {'keyword': query, 'subType': 'CITY'};
+    return httpClient
+        .get<Json>('/reference-data/locations', queryParameters: parameters)
+        .then(
+          (res) => IndexResponse.fromJson(
+            res.data!,
+            mapper: NetworkLocationAirport.fromJson,
+          ),
+        );
   }
 }

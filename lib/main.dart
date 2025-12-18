@@ -2,6 +2,7 @@ import 'package:flight_booking_app/app/app.dart';
 import 'package:flight_booking_app/di.dart';
 import 'package:flight_booking_app/http/di/di.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_libphonenumber/flutter_libphonenumber.dart'
     as lib_phone_number;
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -14,6 +15,7 @@ Future<void> main() async {
     storageDirectory: HydratedStorageDirectory((await getApplicationSupportDirectory()).path),
   );
 
+  await dotenv.load();
   await configureDependencies();
   setupInterceptors();
   await lib_phone_number.init();

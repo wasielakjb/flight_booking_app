@@ -1,4 +1,4 @@
-import 'package:flight_booking_app/extensions/json.dart';
+import 'package:flight_booking_app/core/models/json.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'access_token.g.dart';
@@ -9,7 +9,8 @@ class AccessToken {
     required this.tokenType,
     required this.accessToken,
     required this.expiresIn,
-  }) : expiresAt = DateTime.now().add(Duration(seconds: expiresIn));
+    required this.generatedAt,
+  });
 
   factory AccessToken.fromJson(Json json) =>
       _$AccessTokenFromJson(json);
@@ -17,10 +18,11 @@ class AccessToken {
   final String tokenType;
   final String accessToken;
   final int expiresIn;
-  final DateTime expiresAt;
+  final DateTime generatedAt;
 
   String get requestToken => '$tokenType $accessToken';
-  bool get isExpired => DateTime.now().isAfter(expiresAt);
+  DateTime get expiresAt => generatedAt.add(Duration(seconds: expiresIn));
+  bool get isExpired =>  DateTime.now().isAfter(expiresAt);
 
   Json toJson() => _$AccessTokenToJson(this);
 }

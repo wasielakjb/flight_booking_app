@@ -1,4 +1,4 @@
-import 'package:flight_booking_app/core/repository.dart';
+import 'package:flight_booking_app/core/repository/repository.dart';
 import 'package:flight_booking_app/features/users/data/data_sources/user_remote_ds.dart';
 import 'package:flight_booking_app/features/users/data/mapper/user_mapper.dart';
 import 'package:flight_booking_app/features/users/domain/models/user_request.dart';

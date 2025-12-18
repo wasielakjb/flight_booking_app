@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flight_booking_app/extensions/json.dart';
+import 'package:flight_booking_app/core/models/json.dart';
 import 'package:flight_booking_app/features/auth/domain/models/access_token.dart';
 import 'package:flight_booking_app/http/di/di.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
 
 @singleton
@@ -50,9 +51,14 @@ class AuthRemoteDataSource {
       '/security/oauth2/token',
       data: {
         'grant_type': 'client_credentials',
-        'client_id': 'EwiBDBGTbiiZ3ysnW5Qe4MntEKgOGCni',
-        'client_secret': 'RBLjHbRYXFLqJ6xN',
+        'client_id': dotenv.env['API_KEY'],
+        'client_secret': dotenv.env['API_SECRET'],
       },
-    ).then((res) => AccessToken.fromJson(res.data!));
+    ).then(
+      (res) => AccessToken.fromJson({
+        ...res.data!,
+        'generated_at': DateTime.now().toIso8601String(),
+      }),
+    );
   }
 }

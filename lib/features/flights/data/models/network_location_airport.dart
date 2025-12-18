@@ -1,4 +1,4 @@
-import 'package:flight_booking_app/extensions/json.dart';
+import 'package:flight_booking_app/core/models/json.dart';
 import 'package:flight_booking_app/features/flights/data/models/network_location_address.dart';
 import 'package:flight_booking_app/features/flights/domain/enums/location_type.dart';
 import 'package:json_annotation/json_annotation.dart';

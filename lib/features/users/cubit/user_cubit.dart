@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flight_booking_app/core/resource_status.dart';
+import 'package:flight_booking_app/core/enums/resource_status.dart';
 import 'package:flight_booking_app/features/users/domain/models/user_request.dart';
 import 'package:flight_booking_app/features/users/domain/models/user_resource.dart';
 import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';

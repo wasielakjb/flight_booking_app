@@ -1,8 +1,11 @@
+import 'package:json_annotation/json_annotation.dart';
+
+@JsonEnum(fieldRename: FieldRename.screamingSnake)
 enum TravelClass {
-  first,
   economy,
+  premiumEconomy,
   business,
-  premiumEconomy;
+  first;
 
   String resolveName() => switch (this) {
         first => 'First Class',

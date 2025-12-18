@@ -35,14 +35,16 @@ class AppTheme {
     ),
     searchBarTheme: SearchBarThemeData(
       elevation: const WidgetStatePropertyAll(0),
-      side: WidgetStatePropertyAll(
-        BorderSide(color: lightColorScheme.outlineVariant),
-      ),
-      backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
+      backgroundColor: WidgetStatePropertyAll(lightColorScheme.surfaceContainer),
+      padding: const WidgetStatePropertyAll(EdgeInsets.fromLTRB(20, 0, 4, 0)),
       hintStyle: WidgetStatePropertyAll(
         lightTextTheme.bodyLarge?.copyWith(
-          color: lightColorScheme.onSurface.withValues(alpha: 0.6),
+          color: lightColorScheme.onSurface.withValues(alpha: 0.4),
         ),
+      ),
+      textStyle: WidgetStatePropertyAll(lightTextTheme.bodyLarge),
+      side: WidgetStatePropertyAll(
+        BorderSide(color: lightColorScheme.outlineVariant),
       ),
     ),
     filledButtonTheme: FilledButtonThemeData(

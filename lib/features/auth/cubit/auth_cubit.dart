@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flight_booking_app/core/safe_emit_mixin.dart';
+import 'package:flight_booking_app/core/mixin/safe_emit_mixin.dart';
 import 'package:flight_booking_app/features/auth/domain/models/auth_status.dart';
 import 'package:flight_booking_app/features/auth/domain/models/login_credentials.dart';
 import 'package:flight_booking_app/features/auth/domain/models/register_credentials.dart';

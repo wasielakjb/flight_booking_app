@@ -1,5 +1,5 @@
-import 'package:flight_booking_app/core/form_request.dart';
-import 'package:flight_booking_app/extensions/json.dart';
+import 'package:flight_booking_app/core/models/json.dart';
+import 'package:flight_booking_app/core/request/form_request.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_request.g.dart';
