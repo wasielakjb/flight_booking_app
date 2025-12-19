@@ -1,5 +1,8 @@
-import 'package:flight_booking_app/features/flights/domain/models/location_airport.dart';
+import 'package:flight_booking_app/core/request/form_request.dart';
+import 'package:flight_booking_app/features/flights/domain/models/locations/location.dart';
 
 abstract interface class FlightsRepository {
-  Future<List<LocationAirport>> searchAirportsByQuery(String query);
+  Future<List<Location>> searchAirportsByQuery(String query);
+
+  Future<List<dynamic>> searchFlightOffers(covariant FormRequest request);
 }

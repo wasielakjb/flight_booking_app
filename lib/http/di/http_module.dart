@@ -19,7 +19,7 @@ abstract class HttpModule {
   @singleton
   Dio get amadeusHttpClient => Dio(
         BaseOptions(
-          baseUrl: 'https://test.api.amadeus.com/v1',
+          baseUrl: 'https://test.api.amadeus.com',
           headers: jsonHeaders,
         ),
       );

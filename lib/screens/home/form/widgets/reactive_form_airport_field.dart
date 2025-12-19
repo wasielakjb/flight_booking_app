@@ -3,7 +3,7 @@ import 'package:flight_booking_app/di.dart';
 import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
 import 'package:flight_booking_app/extensions/kotlin_extensions.dart';
 import 'package:flight_booking_app/extensions/text_theme_extension.dart';
-import 'package:flight_booking_app/features/flights/domain/models/location_airport.dart';
+import 'package:flight_booking_app/features/flights/domain/models/locations/location.dart';
 import 'package:flight_booking_app/features/flights/domain/repository/flights_repository.dart';
 import 'package:flight_booking_app/templates/bottom_sheet_header.dart';
 import 'package:flight_booking_app/templates/form/ui/reactive_form_text_field.dart';
@@ -13,7 +13,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-typedef ItemBuilder = Widget Function(BuildContext, LocationAirport);
+typedef ItemBuilder = Widget Function(BuildContext, Location);
 
 class ReactiveFormAirportField extends StatelessWidget {
   ReactiveFormAirportField({
@@ -51,7 +51,7 @@ class ReactiveFormAirportField extends StatelessWidget {
           color: context.surfaceContainer,
         ),
       ),
-      child: ReactiveFocusableFormField<LocationAirport, LocationAirport>(
+      child: ReactiveFocusableFormField<Location, Location>(
         formControlName: formControlName,
         validationMessages: validationMessages,
         builder: (field) => InkWell(
@@ -71,7 +71,7 @@ class ReactiveFormAirportField extends StatelessWidget {
             ),
             child: field.value.let(
               (value) => Text(
-                '${value.name}, ${value.address.countryName}',
+                '${value.name}, ${value.address.country}',
                 style: context.bodyLarge,
               ),
             ),
@@ -85,8 +85,8 @@ class ReactiveFormAirportField extends StatelessWidget {
 class AirportBottomSheet extends StatefulWidget {
   const AirportBottomSheet({super.key});
 
-  static Future<LocationAirport?> show(BuildContext c) async {
-    return showModalBottomSheet<LocationAirport>(
+  static Future<Location?> show(BuildContext c) async {
+    return showModalBottomSheet<Location>(
       context: c,
       useSafeArea: true,
       isScrollControlled: true,
@@ -99,7 +99,7 @@ class AirportBottomSheet extends StatefulWidget {
 }
 
 class _AirportBottomSheetState extends State<AirportBottomSheet> {
-  final _results = ValueNotifier<List<LocationAirport>>([]);
+  final _results = ValueNotifier<List<Location>>([]);
 
   @override
   void dispose() {
@@ -133,7 +133,7 @@ class _AirportBottomSheetState extends State<AirportBottomSheet> {
         ),
         const SizedBox(height: 20),
         Expanded(
-          child: ValueListenableBuilder<List<LocationAirport>>(
+          child: ValueListenableBuilder<List<Location>>(
             valueListenable: _results,
             builder: (context, value, child) {
               if (value.isEmpty) {
@@ -161,7 +161,7 @@ class _AirportBottomSheetState extends State<AirportBottomSheet> {
                               style: context.titleMedium,
                               overflow: TextOverflow.clip,
                             ),
-                            Text(value[index].address.countryName),
+                            Text(value[index].address.country),
                           ],
                         ),
                       ],

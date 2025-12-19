@@ -1,7 +1,7 @@
 import 'package:flight_booking_app/core/request/form_request.dart';
 import 'package:flight_booking_app/extensions/reactive_form_extension.dart';
 import 'package:flight_booking_app/features/flights/domain/enums/travel_class.dart';
-import 'package:flight_booking_app/features/flights/domain/models/location_airport.dart';
+import 'package:flight_booking_app/features/flights/domain/models/locations/location.dart';
 import 'package:flight_booking_app/features/flights/domain/models/passenger_count.dart';
 import 'package:flight_booking_app/features/flights/domain/repository/flights_repository.dart';
 import 'package:flight_booking_app/features/flights/domain/request/flight_offert_request.dart';
@@ -29,21 +29,19 @@ class FlightOffertFormCubit extends FormCubit {
   FormRequest mapBeforeSubmit() {
     final passengers = formGroup.controlVal<PassengerCount>(_K.passengers)!;
     return FlightOffertRequest(
-      originLocationCode: formGroup
-          .controlVal<LocationAirport>(_K.originLocationCode)!
-          .iataCode,
-      destinationLocationCode: formGroup
-          .controlVal<LocationAirport>(_K.destinationLocationCode)!
-          .iataCode,
+      originLocationCode: formGroup.controlVal<Location>(_K.originLocationCode)!.iataCode,
+      destinationLocationCode: formGroup.controlVal<Location>(_K.destinationLocationCode)!.iataCode,
       departureDate: formGroup.controlVal<DateTime>(_K.departureDate)!,
       returnDate: formGroup.controlVal<DateTime>(_K.returnDate),
       adults: passengers.adults,
-      children: passengers.children,
-      infants: passengers.infants,
+      children: passengers.children != 0 ? passengers.children: null,
+      infants: passengers.infants != 0 ? passengers.infants: null,
       travelClass: formGroup.controlVal<TravelClass>(_K.travelClass)!,
     );
   }
 
   @override
-  Future<void> sendForm(covariant FormRequest request) async {}
+  Future<dynamic> sendForm(FlightOffertRequest request) async {
+    return repository.searchFlightOffers(request);
+  }
 }

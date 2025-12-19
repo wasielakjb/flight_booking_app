@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'flight_offert_request.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake, createFactory: false)
+@JsonSerializable(createFactory: false, includeIfNull: false)
 class FlightOffertRequest implements FormRequest {
   FlightOffertRequest({
     required this.originLocationCode,
@@ -17,6 +17,7 @@ class FlightOffertRequest implements FormRequest {
     required this.children,
     required this.infants,
     required this.travelClass,
+    this.nonStop = true,
   });
 
   final String originLocationCode;
@@ -29,6 +30,7 @@ class FlightOffertRequest implements FormRequest {
   final int? children;
   final int? infants;
   final TravelClass travelClass;
+  final bool nonStop;
 
   @override
   Json toJson() => _$FlightOffertRequestToJson(this);
@@ -41,5 +43,5 @@ class DateOnlyConverter implements JsonConverter<DateTime, String> {
   DateTime fromJson(String json) => DateTime.parse(json);
 
   @override
-  String toJson(DateTime object) => DateFormat('YYYY-MM-DD').format(object);
+  String toJson(DateTime object) => DateFormat('yyyy-MM-dd').format(object);
 }

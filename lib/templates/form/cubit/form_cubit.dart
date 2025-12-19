@@ -66,8 +66,9 @@ abstract class FormCubit extends Cubit<FormCubitState>
   
     // emit(state.copyWith(pending: true));
     try {
-      // final request = mapBeforeSubmit();
-      // final response = await sendForm(request);
+      final request = mapBeforeSubmit();
+      final response = await sendForm(request);
+      print(response);
       // if (response.isSuccess) {
       //   formGroup
       //     ..markAsPristine()
