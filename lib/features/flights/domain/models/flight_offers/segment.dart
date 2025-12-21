@@ -20,7 +20,7 @@ class Segment extends Equatable {
   final String carrierCode;
   final String number;
   final String aircraftCode;
-  final String operatingCarrierName;
+  final String? operatingCarrierName;
   final Duration duration;
   final int numberOfStops;
 

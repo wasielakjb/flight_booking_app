@@ -14,7 +14,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
-class SettingsProfilePage extends StatefulWidget implements AutoRouteWrapper{
+class SettingsProfilePage extends StatefulWidget implements AutoRouteWrapper {
   const SettingsProfilePage({required this.userCubit, super.key});
 
   final UserCubit userCubit;

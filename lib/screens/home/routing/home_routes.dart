@@ -8,5 +8,9 @@ class HomeRoutes {
           page: HomeRoute.page,
           transitionsBuilder: TransitionsBuilders.noTransition,
         ),
+        AutoRoute(
+          path: 'flights-result',
+          page: FlightsResultRoute.page,
+        ),
       ];
 }

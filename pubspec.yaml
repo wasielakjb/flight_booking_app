@@ -48,6 +48,7 @@ dependencies:
   reactive_dropdown_search: ^5.0.6
   reactive_date_time_picker: ^5.0.1
   flutter_dotenv: ^6.0.0
+  dotted_line: ^3.2.3
 
 dev_dependencies:
   flutter_test:

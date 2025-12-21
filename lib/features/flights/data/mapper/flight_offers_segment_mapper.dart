@@ -10,7 +10,7 @@ extension FlightOffersSegmentToEntityMapper on NetworkSegment {
         carrierCode: carrierCode,
         number: number,
         aircraftCode: aircraft['code'] as String,
-        operatingCarrierName: operating['carrierName'] as String,
+        operatingCarrierName: operating['carrierName'] as String?,
         duration: duration.toDuration(),
         numberOfStops: numberOfStops,
       );

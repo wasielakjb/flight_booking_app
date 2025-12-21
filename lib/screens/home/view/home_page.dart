@@ -5,7 +5,7 @@ import 'package:flight_booking_app/extensions/color_scheme_extension.dart';
 import 'package:flight_booking_app/extensions/text_theme_extension.dart';
 import 'package:flight_booking_app/features/users/cubit/user_cubit.dart';
 import 'package:flight_booking_app/features/users/domain/repository/user_repository.dart';
-import 'package:flight_booking_app/screens/home/form/view/flight_offert_form_wgt.dart';
+import 'package:flight_booking_app/screens/home/screens/flights_form/view/flights_form_wgt.dart';
 import 'package:flight_booking_app/screens/home/widgets/home_user_header_wgt.dart';
 import 'package:flight_booking_app/templates/app_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -60,9 +60,8 @@ class HomePage extends StatelessWidget implements AutoRouteWrapper {
                       ),
                     ],
                   ),
-                  child: const FlightOffertFormWidget(),
-                ),
-                // const HomeSearchForm(),        
+                  child: const FlightsFormWidget(),
+                ),     
               ],
             ),
           ),

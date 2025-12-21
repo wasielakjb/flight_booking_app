@@ -12,7 +12,6 @@ class FlightOffertRequest implements FormRequest {
     required this.originLocationCode,
     required this.destinationLocationCode,
     required this.departureDate,
-    required this.returnDate,
     required this.adults,
     required this.children,
     required this.infants,
@@ -24,8 +23,6 @@ class FlightOffertRequest implements FormRequest {
   final String destinationLocationCode;
   @DateOnlyConverter()
   final DateTime departureDate;
-  @DateOnlyConverter()
-  final DateTime? returnDate;
   final int adults;
   final int? children;
   final int? infants;
